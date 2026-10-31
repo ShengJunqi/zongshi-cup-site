@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>方向 C · 潮流贴纸</title>
+<style>
+:root{--cream:#f7f2e6;--ink:#111111;--blue:#2447ff;--red:#ff3b30;--yellow:#ffd23f;--muted:#6a665c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif;min-height:100vh;background-image:radial-gradient(rgba(17,17,17,.14) 1px,transparent 1px);background-size:8px 8px}
+.screen{max-width:390px;margin:0 auto;padding:14px 16px 28px}
+.dir{display:inline-block;padding:1px 8px;border:1.5px solid var(--ink);border-radius:99px;font-size:10px;background:#fff;letter-spacing:1px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.logo{background:var(--blue);color:#fff;font-weight:900;font-size:22px;letter-spacing:2px;padding:4px 10px;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);transform:rotate(-2deg)}
+.nav{display:flex;gap:6px}
+.nav span{font-size:10px;background:#fff;border:2px solid var(--ink);padding:2px 7px;font-weight:700}
+.nav .on{background:var(--yellow)}
+.hero{margin-top:16px;position:relative}
+.tape{display:inline-block;background:var(--yellow);border:2px solid var(--ink);font-size:10px;font-weight:700;padding:2px 9px;letter-spacing:1px;transform:rotate(-2deg)}
+.score{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:12px 14px 14px;margin-top:8px;position:relative}
+.score .big{font-family:Impact,"Arial Black",sans-serif;font-size:58px;line-height:1;letter-spacing:-1px}
+.score .big em{font-style:normal;color:var(--red)}
+.score .sub{font-size:11px;font-weight:700;margin-top:2px}
+.sticker{position:absolute;right:10px;top:14px;background:var(--red);color:#fff;border:2px solid var(--ink);font-size:11px;font-weight:800;padding:6px 8px;transform:rotate(6deg);box-shadow:3px 3px 0 var(--ink);line-height:1.3;text-align:center}
+.cta{display:inline-block;margin-top:10px;background:var(--blue);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);font-weight:900;font-size:13px;padding:7px 14px;text-decoration:none}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.tile{background:#fff;border:3px solid var(--ink);padding:8px 4px;text-align:center;box-shadow:3px 3px 0 var(--ink)}
+.tile b{display:block;font-family:Impact,"Arial Black",sans-serif;font-size:20px;letter-spacing:1px}
+.tile span{font-size:9.5px;font-weight:700}
+.pcard{margin-top:18px;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:12px;position:relative;transform:rotate(.4deg)}
+.pcard .no{position:absolute;right:10px;top:10px;font-family:Impact,"Arial Black",sans-serif;font-size:13px;background:var(--yellow);border:2px solid var(--ink);padding:1px 6px;transform:rotate(4deg)}
+.pname{font-weight:900;font-size:26px;letter-spacing:1px;line-height:1.1}
+.prole{font-size:10.5px;font-weight:700;color:var(--muted);margin-top:3px}
+.phero{display:inline-block;margin-top:6px;background:var(--blue);color:#fff;border:2px solid var(--ink);font-size:10px;font-weight:800;padding:1px 8px}
+.pstats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+.pstat{border:2px solid var(--ink);padding:6px 4px;text-align:center;background:var(--cream)}
+.pstat b{display:block;font-family:Impact,"Arial Black",sans-serif;font-size:17px;letter-spacing:.5px}
+.pstat span{font-size:9px;font-weight:700}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tag{font-size:9.5px;font-weight:800;border:2px solid var(--ink);padding:2px 7px;background:var(--yellow);transform:rotate(-2deg)}
+.tag.gray{background:#fff;color:var(--muted);border-style:dashed;transform:rotate(1deg)}
+.tl{margin-top:18px;background:var(--yellow);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:10px 12px}
+.tl h3{margin:0 0 6px;font-size:12px;font-weight:900;letter-spacing:1px}
+.ev{display:flex;gap:8px;font-size:11.5px;font-weight:700;padding:5px 0;border-bottom:2px dashed rgba(17,17,17,.35)}
+.ev:last-of-type{border-bottom:none}
+.ev time{font-family:Impact,"Arial Black",sans-serif;min-width:44px;letter-spacing:.5px}
+.src{margin-top:14px;background:#fff;border:2px solid var(--ink);padding:8px 10px;font-size:9.5px;line-height:1.6;color:var(--muted);font-weight:600}
+.share{display:inline-block;margin-top:12px;font-size:11px;font-weight:900;border:2px solid var(--ink);background:#fff;padding:4px 10px;box-shadow:3px 3px 0 var(--ink);transform:rotate(-1deg)}
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="dir">方向 C · 潮流贴纸</div>
+
+  <div class="topbar">
+    <div class="logo">宗师杯</div>
+    <div class="nav"><span class="on">首页</span><span>选手</span><span>卡墙</span><span>数据</span></div>
+  </div>
+
+  <div class="hero">
+    <div class="tape">赏金赛 · 第一把 · 已结束</div>
+    <div class="score">
+      <div class="big">3<em>:</em>17</div>
+      <div class="sub">6:03 基地被摧毁 · 1 场样本</div>
+      <div class="sticker">6:03<br/>没了</div>
+      <a class="cta" href="#">看战报 →</a>
+    </div>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><b>42</b><span>选手档案</span></div>
+    <div class="tile"><b>6</b><span>击杀事件</span></div>
+    <div class="tile"><b>120</b><span>英雄数据</span></div>
+  </div>
+
+  <div class="pcard">
+    <div class="no">02/42</div>
+    <div class="pname">放闪的秋</div>
+    <div class="prole">我方 · 打野 · 铠 · 一局数据</div>
+    <span class="phero">本场全队火力点</span>
+    <div class="pstats">
+      <div class="pstat"><b>3/3/0</b><span>KDA</span></div>
+      <div class="pstat"><b>100%</b><span>参团率</span></div>
+      <div class="pstat"><b>1 场</b><span>样本</span></div>
+    </div>
+    <div class="tags"><span class="tag">独狼强开</span><span class="tag gray">风险型 · 一局初判</span></div>
+  </div>
+
+  <div class="tl">
+    <h3>高光时间线</h3>
+    <div class="ev"><time>01:57</time><p>全队第一头（铠）</p></div>
+    <div class="ev"><time>03:23</time><p>第二头（铠）</p></div>
+    <div class="ev"><time>04:40</time><p>第三头（铠）</p></div>
+  </div>
+
+  <span class="share">保存卡片 · 分享给队友</span>
+  <div class="src">数据：第一把结算面板 + 事实台账 · 2026-10-28 核对<br/>示意图 · 非最终设计 · 时间码口径以最终版为准</div>
+</div>
+</body>
+</html>

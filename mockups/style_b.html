@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>方向 B · 战报白</title>
+<style>
+:root{--paper:#f2ecdd;--card:#fbf7ec;--ink:#1c1a17;--red:#a63a2b;--gold:#8a6d2f;--muted:#6d665a;--line:#c9c0ac}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"STZhongsong","SimSun","Songti SC",serif;min-height:100vh;background-image:repeating-linear-gradient(0deg,rgba(120,100,70,.04) 0,rgba(120,100,70,.04) 1px,transparent 1px,transparent 5px)}
+.screen{max-width:390px;margin:0 auto;padding:14px 18px 26px}
+.dir{display:inline-block;padding:1px 8px;border:1px solid var(--line);border-radius:99px;font-size:10px;color:var(--muted);letter-spacing:1px;font-family:"Microsoft YaHei",sans-serif}
+.masthead{display:flex;justify-content:space-between;align-items:flex-start;border-top:3px double var(--ink);border-bottom:1px solid var(--ink);padding:10px 0 8px;margin-top:10px}
+.masthead h1{margin:0;font-size:32px;letter-spacing:6px;line-height:1}
+.masthead .sub{font-size:9.5px;color:var(--muted);letter-spacing:1px;margin-top:5px;font-family:"Microsoft YaHei",sans-serif}
+.stamp{width:54px;height:54px;border:2px solid var(--red);color:var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;line-height:1.25;letter-spacing:1px;transform:rotate(-6deg);padding:4px;flex:none}
+.kicker{font-family:"Microsoft YaHei",sans-serif;font-size:10px;letter-spacing:3px;color:var(--red);margin:12px 0 4px}
+.scoreblock{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--ink);padding-bottom:10px}
+.score{font-family:Georgia,"Times New Roman",serif;font-size:52px;line-height:.95;letter-spacing:-2px}
+.score em{font-style:normal;color:var(--red)}
+.score small{display:block;font-family:"Microsoft YaHei",sans-serif;font-size:10px;color:var(--muted);letter-spacing:1px;margin-top:6px}
+.scoremeta{text-align:right;font-family:"Microsoft YaHei",sans-serif;font-size:11px;line-height:1.7;color:var(--muted)}
+.scoremeta b{color:var(--ink)}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line);margin-top:10px}
+.strip div{padding:8px 4px;text-align:center;border-left:1px solid var(--line)}
+.strip div:first-child{border-left:none}
+.strip b{display:block;font-family:Georgia,serif;font-size:17px}
+.strip span{font-family:"Microsoft YaHei",sans-serif;font-size:9.5px;color:var(--muted);letter-spacing:1px}
+.section{font-family:"Microsoft YaHei",sans-serif;font-size:10px;letter-spacing:3px;color:var(--red);margin:16px 0 6px;display:flex;align-items:center;gap:8px}
+.section:after{content:"";flex:1;border-top:1px solid var(--line)}
+.profile{background:var(--card);border:1px solid var(--ink);padding:12px 14px;position:relative}
+.profile:after{content:"02";position:absolute;right:10px;top:8px;font:32px Georgia,serif;color:#e4dcc8;line-height:1}
+.ptop{display:flex;align-items:baseline;gap:8px}
+.pname{font-size:26px;letter-spacing:2px;font-weight:700}
+.prole{font-family:"Microsoft YaHei",sans-serif;font-size:10px;color:var(--muted);letter-spacing:1px}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-family:"Microsoft YaHei",sans-serif;font-size:12px}
+td{padding:5px 0;border-bottom:1px dotted var(--line)}
+td:last-child{text-align:right;font-family:Georgia,serif;font-size:15px}
+.note{font-family:"Microsoft YaHei",sans-serif;font-size:11px;color:var(--muted);line-height:1.6;margin-top:8px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;font-family:"Microsoft YaHei",sans-serif}
+.tag{font-size:10px;border:1px solid var(--ink);padding:1px 7px;letter-spacing:1px}
+.tag.gray{border-color:var(--line);color:var(--muted)}
+.tl{margin-top:6px;font-family:"Microsoft YaHei",sans-serif;font-size:12px}
+.ev{display:flex;gap:10px;padding:7px 0;border-bottom:1px dotted var(--line)}
+.ev time{font-family:Georgia,serif;color:var(--red);min-width:42px;font-size:13px}
+.ev p{margin:0;color:#33302a}
+.src{margin-top:14px;border-top:1px solid var(--ink);padding-top:8px;font-family:"Microsoft YaHei",sans-serif;font-size:9.5px;color:var(--muted);line-height:1.7}
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="dir">方向 B · 战报白</div>
+
+  <div class="masthead">
+    <div>
+      <h1>宗师杯战报</h1>
+      <div class="sub">OSU 学生自行组织 · 赏金赛第一把</div>
+    </div>
+    <div class="stamp">第 01 期<br/>第一把</div>
+  </div>
+
+  <div class="kicker">FINAL SCORE · 6:03 基地被摧毁</div>
+  <div class="scoreblock">
+    <div class="score">3<em>：</em>17<small>我方 3 · 对方 17</small></div>
+    <div class="scoremeta">
+      队内 MVP：<b>猫猫</b><br/>
+      2.6× 速通奖励结算<br/>
+      样本：1 场 · 已结束
+    </div>
+  </div>
+
+  <div class="strip">
+    <div><b>42</b><span>选手档案</span></div>
+    <div><b>6</b><span>击杀事件</span></div>
+    <div><b>120</b><span>英雄数据</span></div>
+  </div>
+
+  <div class="section">选手档案 · 02</div>
+  <div class="profile">
+    <div class="ptop"><div class="pname">放闪的秋</div><div class="prole">我方 · 打野 · 铠</div></div>
+    <table>
+      <tr><td>K / D / A</td><td>3 / 3 / 0</td></tr>
+      <tr><td>参团率</td><td>100%</td></tr>
+      <tr><td>样本</td><td>1 场</td></tr>
+    </table>
+    <div class="tags"><span class="tag">独狼强开</span><span class="tag gray">风险型 · 一局初判</span></div>
+    <div class="note">数据印象：全队 3 个人头都在他手上，0 助攻 3 死亡——一局样本，不是实力评价。</div>
+  </div>
+
+  <div class="section">高光时间线 · 第一把</div>
+  <div class="tl">
+    <div class="ev"><time>01:57</time><p>全队第一头（铠）</p></div>
+    <div class="ev"><time>03:23</time><p>第二头（铠）</p></div>
+    <div class="ev"><time>04:40</time><p>第三头（铠）</p></div>
+  </div>
+
+  <div class="src">数据：第一把结算面板 + 事实台账 · 2026-10-28 核对<br/>示意图 · 非最终设计 · 时间码口径以最终版为准</div>
+</div>
+</body>
+</html>
