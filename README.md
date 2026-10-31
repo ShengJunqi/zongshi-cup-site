@@ -59,7 +59,7 @@
 - HOK Camp 英雄榜：120 英雄；源日期 2026-10-16，抓取 2026-10-28。
 - 视频：四分钟复盘 57.6s、开头样片 57s（原创音乐 + 字幕，非现场音）。
 
-## M1 样板（2026-10-31）
+## M1 样板（2026-10-31，Codex PASS @ `dec7816`）
 
 - 生成：`python src/prepare_data.py` → `python src/build_site.py` → `python src/take_shots.py`
 - 本地预览：双击 `site/index.html`（五个入口：首页 / 赛事 / 赛程 / 战报 / 样板选手 / 来源）
@@ -69,6 +69,6 @@
 
 ## 仓库
 
-本地：`D:\宗师杯视频\website` ｜ GitHub：https://github.com/ShengJunqi/zongshi-cup-site
+本地预览：双击 `site/index.html` ｜ GitHub：https://github.com/ShengJunqi/zongshi-cup-site
 
 公开范围：网站公开、源码公开、选手资料公开是三个不同范围；先检查内容再推进公开招聘，不凭旧计划假定可部署。

@@ -10,10 +10,11 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC = Path(r"D:\宗师杯视频\HOK-model\exports\website\players_combined.json")
+SRC = Path(os.environ.get("HOK_MODEL_PLAYERS", ROOT.parent / "HOK-model" / "exports" / "website" / "players_combined.json"))
 OUT = ROOT / "data" / "site_data.json"
 
 # 外部来源（locator 写相对项目名，公开页不暴露本机绝对路径）
