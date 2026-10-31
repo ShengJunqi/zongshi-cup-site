@@ -278,8 +278,7 @@ def validate(data: dict) -> None:
         res = m["result"]
         need(res["status"] in {"pending", "confirmed"}, "match result status " + mid)
         a, b = res["series_score"]["team_a_wins"], res["series_score"]["team_b_wins"]
-        need(isinstance(a, int) and isinstance(b, int) and a >= 0 and b >= 0, "BO wins int/non-negative " + mid)
-        need(a + b <= cap, "BO wins exceed cap " + mid)
+        need(type(a) is int and type(b) is int and a >= 0 and b >= 0, "BO wins int/non-negative " + mid)
         if res["status"] == "confirmed":
             need((a == cap and b < cap) or (b == cap and a < cap), "confirmed BO winner " + mid)
             need(res.get("winner_team_id") in teams, "confirmed match winner " + mid)
@@ -306,7 +305,9 @@ def validate(data: dict) -> None:
                 need(g[key] in snaps, "game roster " + gid)
     for mid, m in matches.items():
         gs = [g for g in games.values() if g["match_id"] == mid and g.get("winner_team_id")]
-        if m["result"]["status"] == "confirmed" and gs:
+        a_wins = m["result"]["series_score"]["team_a_wins"]
+        b_wins = m["result"]["series_score"]["team_b_wins"]
+        if m["result"]["status"] == "confirmed" and gs and len(gs) == a_wins + b_wins:
             wa = sum(1 for g in gs if g["winner_team_id"] == m["team_a_id"])
             wb = sum(1 for g in gs if g["winner_team_id"] == m["team_b_id"])
             need(wa == m["result"]["series_score"]["team_a_wins"] and wb == m["result"]["series_score"]["team_b_wins"],

@@ -432,7 +432,7 @@ class Site:
   <div class="card">
     <div class="badges">{self.event_state(hist)}<span class="badge warn">日期待确认</span><span class="badge">BO1</span></div>
     <h3 style="margin-top:10px">赏金赛第一把 · {esc(self.team_name("t_osu"))} vs {esc(self.team_name("t_champ"))}</h3>
-    <p class="small">单局击杀 <b>3 : 17</b> · 基地 6:03 · 胜局 0:1 · {self.src("src_settle_919")}</p>
+    <p class="small">单局击杀 <b>3 : 17</b> · {self.clock_note()} · 胜局 0:1 · 来源：{self.src("src_settle_919","结算面板")} · {self.src("src_base_905","905s")}</p>
     <a class="btn ghost small" href="{self.prefix}matches/s2-first.html">查看战报 →</a>
   </div>
 </section>
@@ -529,7 +529,7 @@ class Site:
   <p class="small">结算面板、身份与事实修正、map_kit、事实台账。未确认项见 <a href="{self.prefix}sources.html">来源页</a>。</p>
 </section>
 """
-        return self.layout("赏金赛第一把战报", "schedule", body, "赏金赛第一把：3:17、6:03 基地、时间线与双份数据")
+        return self.layout("赏金赛第一把战报", "schedule", body, "赏金赛第一把：3:17、最后可见时钟 06:03、时间线与双方数据")
 
     def page_player(self) -> str:
         self.ev("e_s2_01")
@@ -584,7 +584,7 @@ class Site:
 <section class="section">
   <div class="section-head"><h2>比赛记录</h2></div>
   <div class="card tight">
-    <p class="small">1 场 · 赏金赛第一把 · 单局击杀 3 : 17 · 最后可见时钟 6:03 · 负。</p>
+    <p class="small">1 场 · 赏金赛第一把 · 单局击杀 3 : 17 · {self.clock_note()} · 负。</p>
     <a class="btn ghost small" href="{self.prefix}matches/s2-first.html">查看完整战报 →</a>
   </div>
 </section>
@@ -689,6 +689,12 @@ function copyLink(){{
     def page_share_card(self) -> str:
         p = self.persons["p_0002"]
         st = next(s for s in self.stats if s["person_id"] == "p_0002")
+        kills = [t for t in self.timeline if t["type"] == "kill" and t["person_id"] == "p_0002"]
+        ords = ["一", "二", "三", "四", "五"]
+        tl_rows = "".join(
+            f'<div><time>{esc(t["clock"])}</time><span>全队第{ords[i]}头（铠）'
+            f'{" · 时间待核实" if t["clock_status"] != "confirmed" else ""}</span></div>'
+            for i, t in enumerate(kills))
         return f"""<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="utf-8"/>
 <title>分享卡 · 放闪的秋</title>
@@ -738,11 +744,9 @@ h1{{font-size:52px;letter-spacing:2px;line-height:1.1}}
 </div>
 <div class="note">全队 3 个人头都在他手上（{self.highlight_text()}），但 3 次死亡、0 助攻——一局样本，不是实力评价。</div>
 <div class="tl"><h2>高光时间线</h2>
-  <div><time>01:57</time><span>全队第一头 · 时间待核实</span></div>
-  <div><time>03:23</time><span>全队第二头</span></div>
-  <div><time>04:40</time><span>全队第三头</span></div>
+  {tl_rows}
 </div>
-<div class="match"><h2>比赛记录</h2><div>赏金赛第一把 · 单局击杀 <b>3 : 17</b> · 最后可见时钟 6:03 · 负 · BO1</div></div>
+<div class="match"><h2>比赛记录</h2><div>赏金赛第一把 · 单局击杀 <b>3 : 17</b> · {self.clock_note()} · 负 · BO1</div></div>
 <div class="foot">
   <b>数据来源：</b>赏金赛第一把结算面板 + 身份与事实修正 + map_kit（推塔）；1 场样本，不代表长期实力。<br/>
   <b>只公开游戏昵称与游戏数据</b>，不公开真实姓名/学校；未确认信息标「待核实」。<br/>
