@@ -99,6 +99,22 @@ class ContractTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate(d)
 
+    def test_float_wins_rejected(self) -> None:
+        d = copy.deepcopy(self.data)
+        d["matches"][0]["result"]["series_score"] = {"team_a_wins": 1.0, "team_b_wins": 0}
+        with self.assertRaises(ValueError):
+            validate(d)
+
+    def test_pending_at_cap_rejected(self) -> None:
+        d = copy.deepcopy(self.data)
+        m = d["matches"][0]
+        m["format"] = "bo3"
+        m["result"] = {"winner_team_id": None,
+                       "series_score": {"team_a_wins": 2, "team_b_wins": 0},
+                       "status": "pending"}
+        with self.assertRaises(ValueError):
+            validate(d)
+
     def test_win_mismatch_rejected(self) -> None:
         d = copy.deepcopy(self.data)
         for st in d["player_game_stats"]:
