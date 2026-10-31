@@ -1,0 +1,698 @@
+{
+  "schema_version": "0.3",
+  "sources": [
+    {
+      "source_id": "src_settle_919",
+      "kind": "screenshot",
+      "locator": "赏金赛第一把 结算面板（视频 919s）",
+      "source_date": null,
+      "captured_at": "2026-10-28",
+      "verified_status": "confirmed",
+      "notes": "比分 3:17、十人 KDA/参团"
+    },
+    {
+      "source_id": "src_identity_v01",
+      "kind": "document",
+      "locator": "身份与事实修正 v01 §2.1 / 十人身份核对 v02",
+      "source_date": null,
+      "captured_at": null,
+      "verified_status": "partial",
+      "notes": "一血与第一头时间存在两套记录；分路为候选"
+    },
+    {
+      "source_id": "src_rules_20261008",
+      "kind": "document",
+      "locator": "比赛规则.docx（2026-10-08 版）",
+      "source_date": "2026-10-08",
+      "captured_at": null,
+      "verified_status": "confirmed",
+      "notes": "历史赏金赛规则；与未来赏金赛不是同一套规则"
+    },
+    {
+      "source_id": "src_fact_ledger",
+      "kind": "document",
+      "locator": "00_事实台账.md（2026-10-28 版）",
+      "source_date": "2026-10-28",
+      "captured_at": null,
+      "verified_status": "partial",
+      "notes": "F26 速通 2.6×、F28 队内 MVP 额外 50%；金额不展示"
+    },
+    {
+      "source_id": "src_mapkit",
+      "kind": "document",
+      "locator": "map_kit/README.md（地图教程例题）",
+      "source_date": null,
+      "captured_at": null,
+      "verified_status": "partial",
+      "notes": "推塔时间 B-B1≈04:01、B-B2≈04:28、B-M1≈05:23；需复核原帧"
+    },
+    {
+      "source_id": "src_jason_20261031",
+      "kind": "manual",
+      "locator": "Jason 下一阶段任务大纲（2026-10-31）",
+      "source_date": "2026-10-31",
+      "captured_at": null,
+      "verified_status": "confirmed",
+      "notes": "赛事方向、A 主视觉、范围与协作边界"
+    }
+  ],
+  "rulesets": [
+    {
+      "ruleset_id": "bounty_2026_10",
+      "version": "2026-10-08",
+      "title": "赏金赛（历史）",
+      "category": "bounty_event",
+      "status": "historical",
+      "source_ref_id": "src_rules_20261008"
+    },
+    {
+      "ruleset_id": "bounty_auction_concept",
+      "version": "0.0",
+      "title": "赛季中赏金淘汰赛（构想）",
+      "category": "bounty_event",
+      "status": "concept",
+      "source_ref_id": "src_jason_20261031"
+    },
+    {
+      "ruleset_id": "to_be_decided",
+      "version": "0.0",
+      "title": "正式赛事规则集（待定）",
+      "category": "formal_league",
+      "status": "concept",
+      "source_ref_id": "src_jason_20261031"
+    }
+  ],
+  "persons": [
+    {
+      "person_id": "p_0001",
+      "display_name": "SCG.班师",
+      "identity_status": "candidate",
+      "nickname_history": [],
+      "merged_into": null,
+      "privacy_flags": []
+    },
+    {
+      "person_id": "p_0002",
+      "display_name": "放闪的秋",
+      "identity_status": "candidate",
+      "nickname_history": [],
+      "merged_into": null,
+      "privacy_flags": []
+    },
+    {
+      "person_id": "p_0003",
+      "display_name": "程咬金都人彘",
+      "identity_status": "candidate",
+      "nickname_history": [],
+      "merged_into": null,
+      "privacy_flags": []
+    },
+    {
+      "person_id": "p_0004",
+      "display_name": "终是没狙中你",
+      "identity_status": "candidate",
+      "nickname_history": [],
+      "merged_into": null,
+      "privacy_flags": []
+    },
+    {
+      "person_id": "p_0005",
+      "display_name": "好好吃饭",
+      "identity_status": "candidate",
+      "nickname_history": [],
+      "merged_into": null,
+      "privacy_flags": []
+    },
+    {
+      "person_id": "p_0006",
+      "display_name": "霖的玩偶",
+      "identity_status": "candidate",
+      "nickname_history": [],
+      "merged_into": null,
+      "privacy_flags": []
+    },
+    {
+      "person_id": "p_0007",
+      "display_name": "wsvgdcn",
+      "identity_status": "candidate",
+      "nickname_history": [],
+      "merged_into": null,
+      "privacy_flags": []
+    },
+    {
+      "person_id": "p_0008",
+      "display_name": "赐我至纯至真 / 猫猫",
+      "identity_status": "candidate",
+      "nickname_history": [],
+      "merged_into": null,
+      "privacy_flags": []
+    },
+    {
+      "person_id": "p_0009",
+      "display_name": "Egoistical",
+      "identity_status": "candidate",
+      "nickname_history": [],
+      "merged_into": null,
+      "privacy_flags": []
+    },
+    {
+      "person_id": "p_0010",
+      "display_name": "Sco",
+      "identity_status": "candidate",
+      "nickname_history": [],
+      "merged_into": null,
+      "privacy_flags": []
+    }
+  ],
+  "teams": [
+    {
+      "team_id": "t_osu",
+      "name": "OSU 学生擂主队",
+      "team_status": "confirmed",
+      "name_history": []
+    },
+    {
+      "team_id": "t_champ",
+      "name": "上届冠军队伍",
+      "team_status": "candidate",
+      "name_history": []
+    }
+  ],
+  "events": [
+    {
+      "event_id": "e_s2_01",
+      "title": "赏金赛第一把",
+      "category": "bounty_event",
+      "data_origin": "historical_export",
+      "publish_status": "announced",
+      "archive_status": "historical",
+      "progress_status": "completed",
+      "ruleset_id": "bounty_2026_10",
+      "default_team_formation": "invited",
+      "default_stage_format": "one_day",
+      "default_match_format": "bo1",
+      "public_schedule_status": "tbd",
+      "public_start_at": null,
+      "public_end_at": null,
+      "internal_plan_note": null,
+      "internal_planned_start_at": null,
+      "summary": "历史单场；比赛日期待确认",
+      "source_ref_id": "src_fact_ledger"
+    },
+    {
+      "event_id": "e_league_concept",
+      "title": "长周期正式赛事（筹备）",
+      "category": "formal_league",
+      "data_origin": "concept",
+      "publish_status": "concept",
+      "archive_status": "active",
+      "progress_status": "tbd",
+      "ruleset_id": "to_be_decided",
+      "default_team_formation": "unknown",
+      "default_stage_format": "unknown",
+      "default_match_format": "unknown",
+      "public_schedule_status": "tbd",
+      "public_start_at": null,
+      "public_end_at": null,
+      "internal_plan_note": null,
+      "internal_planned_start_at": null,
+      "summary": "筹备方案，尚未公布",
+      "source_ref_id": "src_jason_20261031"
+    },
+    {
+      "event_id": "e_bounty_concept",
+      "title": "赛季中赏金淘汰赛（筹备）",
+      "category": "bounty_event",
+      "data_origin": "concept",
+      "publish_status": "concept",
+      "archive_status": "active",
+      "progress_status": "tbd",
+      "ruleset_id": "bounty_auction_concept",
+      "default_team_formation": "auction",
+      "default_stage_format": "single_elim",
+      "default_match_format": "unknown",
+      "public_schedule_status": "tbd",
+      "public_start_at": null,
+      "public_end_at": null,
+      "internal_plan_note": null,
+      "internal_planned_start_at": null,
+      "summary": "拍卖式组队为待设计构想，尚未公布；与历史赏金赛规则不同",
+      "source_ref_id": "src_jason_20261031"
+    }
+  ],
+  "phases": [
+    {
+      "phase_id": "ph_league_preseason",
+      "event_id": "e_league_concept",
+      "kind": "preseason",
+      "order": 1,
+      "window_status": "tbd",
+      "stage_format": null,
+      "match_format": null,
+      "team_formation": null,
+      "ruleset_id": null,
+      "public_schedule_status": "tbd",
+      "public_start_at": null,
+      "public_end_at": null,
+      "internal_plan_note": null,
+      "source_ref_id": "src_jason_20261031"
+    },
+    {
+      "phase_id": "ph_bounty_oneday",
+      "event_id": "e_bounty_concept",
+      "kind": "one_day",
+      "order": 1,
+      "window_status": "tbd",
+      "stage_format": "single_elim",
+      "match_format": null,
+      "team_formation": "auction",
+      "ruleset_id": null,
+      "public_schedule_status": "tbd",
+      "public_start_at": null,
+      "public_end_at": null,
+      "internal_plan_note": null,
+      "source_ref_id": "src_jason_20261031"
+    }
+  ],
+  "roster_snapshots": [
+    {
+      "snapshot_id": "rs_s2_osu_v1",
+      "event_id": "e_s2_01",
+      "phase_id": null,
+      "team_id": "t_osu",
+      "version": "v1",
+      "created_at": null,
+      "status": "candidate",
+      "source_ref_id": "src_settle_919",
+      "entries": [
+        {
+          "person_id": "p_0001",
+          "role": "对抗路",
+          "role_status": "candidate",
+          "joined_at": null
+        },
+        {
+          "person_id": "p_0002",
+          "role": "打野",
+          "role_status": "candidate",
+          "joined_at": null
+        },
+        {
+          "person_id": "p_0003",
+          "role": "中路",
+          "role_status": "candidate",
+          "joined_at": null
+        },
+        {
+          "person_id": "p_0004",
+          "role": "发育路",
+          "role_status": "candidate",
+          "joined_at": null
+        },
+        {
+          "person_id": "p_0005",
+          "role": "游走",
+          "role_status": "candidate",
+          "joined_at": null
+        }
+      ]
+    },
+    {
+      "snapshot_id": "rs_s2_champ_v1",
+      "event_id": "e_s2_01",
+      "phase_id": null,
+      "team_id": "t_champ",
+      "version": "v1",
+      "created_at": null,
+      "status": "candidate",
+      "source_ref_id": "src_settle_919",
+      "entries": [
+        {
+          "person_id": "p_0006",
+          "role": "对抗路",
+          "role_status": "candidate",
+          "joined_at": null
+        },
+        {
+          "person_id": "p_0007",
+          "role": "打野",
+          "role_status": "candidate",
+          "joined_at": null
+        },
+        {
+          "person_id": "p_0008",
+          "role": "中路",
+          "role_status": "candidate",
+          "joined_at": null
+        },
+        {
+          "person_id": "p_0009",
+          "role": "发育路",
+          "role_status": "candidate",
+          "joined_at": null
+        },
+        {
+          "person_id": "p_0010",
+          "role": "游走",
+          "role_status": "candidate",
+          "joined_at": null
+        }
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "match_id": "m_s2_01",
+      "event_id": "e_s2_01",
+      "phase_id": null,
+      "round": null,
+      "bracket_slot": null,
+      "team_a_id": "t_osu",
+      "team_b_id": "t_champ",
+      "format": "bo1",
+      "team_a_roster_snapshot_id": "rs_s2_osu_v1",
+      "team_b_roster_snapshot_id": "rs_s2_champ_v1",
+      "public_schedule_status": "tbd",
+      "public_scheduled_start": null,
+      "result": {
+        "winner_team_id": "t_champ",
+        "series_score": {
+          "team_a_wins": 0,
+          "team_b_wins": 1
+        },
+        "status": "confirmed"
+      }
+    }
+  ],
+  "games": [
+    {
+      "game_id": "g_s2_01_1",
+      "match_id": "m_s2_01",
+      "game_no": 1,
+      "winner_team_id": "t_champ",
+      "team_kills": {
+        "team_a": 3,
+        "team_b": 17
+      },
+      "duration_clock": "06:03",
+      "stats_status": "partial",
+      "actual_team_a_roster_snapshot_id": null,
+      "actual_team_b_roster_snapshot_id": null,
+      "source_ref_id": "src_settle_919"
+    }
+  ],
+  "player_game_stats": [
+    {
+      "stat_id": "pgs_01",
+      "game_id": "g_s2_01_1",
+      "person_id": "p_0001",
+      "team_id": "t_osu",
+      "role": "对抗路",
+      "role_status": "candidate",
+      "kills": 0,
+      "deaths": 4,
+      "assists": 1,
+      "participation": 33.0,
+      "win": false,
+      "source_ref_id": "src_settle_919",
+      "verification_status": "confirmed"
+    },
+    {
+      "stat_id": "pgs_02",
+      "game_id": "g_s2_01_1",
+      "person_id": "p_0002",
+      "team_id": "t_osu",
+      "role": "打野",
+      "role_status": "candidate",
+      "kills": 3,
+      "deaths": 3,
+      "assists": 0,
+      "participation": 100.0,
+      "win": false,
+      "source_ref_id": "src_settle_919",
+      "verification_status": "confirmed"
+    },
+    {
+      "stat_id": "pgs_03",
+      "game_id": "g_s2_01_1",
+      "person_id": "p_0003",
+      "team_id": "t_osu",
+      "role": "中路",
+      "role_status": "candidate",
+      "kills": 0,
+      "deaths": 4,
+      "assists": 0,
+      "participation": 0.0,
+      "win": false,
+      "source_ref_id": "src_settle_919",
+      "verification_status": "confirmed"
+    },
+    {
+      "stat_id": "pgs_04",
+      "game_id": "g_s2_01_1",
+      "person_id": "p_0004",
+      "team_id": "t_osu",
+      "role": "发育路",
+      "role_status": "candidate",
+      "kills": 0,
+      "deaths": 2,
+      "assists": 1,
+      "participation": 33.0,
+      "win": false,
+      "source_ref_id": "src_settle_919",
+      "verification_status": "confirmed"
+    },
+    {
+      "stat_id": "pgs_05",
+      "game_id": "g_s2_01_1",
+      "person_id": "p_0005",
+      "team_id": "t_osu",
+      "role": "游走",
+      "role_status": "candidate",
+      "kills": 0,
+      "deaths": 4,
+      "assists": 1,
+      "participation": 33.0,
+      "win": false,
+      "source_ref_id": "src_settle_919",
+      "verification_status": "confirmed"
+    },
+    {
+      "stat_id": "pgs_06",
+      "game_id": "g_s2_01_1",
+      "person_id": "p_0006",
+      "team_id": "t_champ",
+      "role": "对抗路",
+      "role_status": "candidate",
+      "kills": 1,
+      "deaths": 2,
+      "assists": 5,
+      "participation": 35.0,
+      "win": false,
+      "source_ref_id": "src_settle_919",
+      "verification_status": "confirmed"
+    },
+    {
+      "stat_id": "pgs_07",
+      "game_id": "g_s2_01_1",
+      "person_id": "p_0007",
+      "team_id": "t_champ",
+      "role": "打野",
+      "role_status": "candidate",
+      "kills": 8,
+      "deaths": 0,
+      "assists": 6,
+      "participation": 82.0,
+      "win": false,
+      "source_ref_id": "src_settle_919",
+      "verification_status": "confirmed"
+    },
+    {
+      "stat_id": "pgs_08",
+      "game_id": "g_s2_01_1",
+      "person_id": "p_0008",
+      "team_id": "t_champ",
+      "role": "中路",
+      "role_status": "candidate",
+      "kills": 6,
+      "deaths": 1,
+      "assists": 7,
+      "participation": 76.0,
+      "win": false,
+      "source_ref_id": "src_settle_919",
+      "verification_status": "confirmed"
+    },
+    {
+      "stat_id": "pgs_09",
+      "game_id": "g_s2_01_1",
+      "person_id": "p_0009",
+      "team_id": "t_champ",
+      "role": "发育路",
+      "role_status": "candidate",
+      "kills": 2,
+      "deaths": 0,
+      "assists": 9,
+      "participation": 65.0,
+      "win": false,
+      "source_ref_id": "src_settle_919",
+      "verification_status": "confirmed"
+    },
+    {
+      "stat_id": "pgs_10",
+      "game_id": "g_s2_01_1",
+      "person_id": "p_0010",
+      "team_id": "t_champ",
+      "role": "游走",
+      "role_status": "candidate",
+      "kills": 0,
+      "deaths": 0,
+      "assists": 15,
+      "participation": 88.0,
+      "win": false,
+      "source_ref_id": "src_settle_919",
+      "verification_status": "confirmed"
+    }
+  ],
+  "timeline": [
+    {
+      "timeline_id": "tl_kill_01",
+      "game_id": "g_s2_01_1",
+      "clock": "00:44",
+      "clock_status": "pending",
+      "type": "kill",
+      "team_id": "t_champ",
+      "person_id": null,
+      "attribution_status": "unknown",
+      "description": "敌方一血（时间口径 00:41/00:44 待统一）",
+      "evidence_ref_id": "src_identity_v01"
+    },
+    {
+      "timeline_id": "tl_kill_02",
+      "game_id": "g_s2_01_1",
+      "clock": "01:53",
+      "clock_status": "confirmed",
+      "type": "kill",
+      "team_id": "t_champ",
+      "person_id": null,
+      "attribution_status": "unknown",
+      "description": "敌方连续击杀，比分 0:4",
+      "evidence_ref_id": "src_identity_v01"
+    },
+    {
+      "timeline_id": "tl_kill_03",
+      "game_id": "g_s2_01_1",
+      "clock": "01:57",
+      "clock_status": "pending",
+      "type": "kill",
+      "team_id": "t_osu",
+      "person_id": "p_0002",
+      "attribution_status": "known",
+      "description": "全队第一头（放闪的秋·铠；时间口径 01:56/01:57 待统一）",
+      "evidence_ref_id": "src_identity_v01"
+    },
+    {
+      "timeline_id": "tl_kill_04",
+      "game_id": "g_s2_01_1",
+      "clock": "03:23",
+      "clock_status": "confirmed",
+      "type": "kill",
+      "team_id": "t_osu",
+      "person_id": "p_0002",
+      "attribution_status": "known",
+      "description": "全队第二头（放闪的秋·铠）",
+      "evidence_ref_id": "src_identity_v01"
+    },
+    {
+      "timeline_id": "tl_kill_05",
+      "game_id": "g_s2_01_1",
+      "clock": "04:40",
+      "clock_status": "confirmed",
+      "type": "kill",
+      "team_id": "t_osu",
+      "person_id": "p_0002",
+      "attribution_status": "known",
+      "description": "全队第三头（放闪的秋·铠）",
+      "evidence_ref_id": "src_identity_v01"
+    },
+    {
+      "timeline_id": "tl_tower_01",
+      "game_id": "g_s2_01_1",
+      "clock": "04:01",
+      "clock_status": "pending",
+      "type": "tower",
+      "team_id": null,
+      "person_id": null,
+      "attribution_status": "unknown",
+      "description": "蓝方下路外塔 B-B1 失守（教程例题，需复核原帧）",
+      "evidence_ref_id": "src_mapkit"
+    },
+    {
+      "timeline_id": "tl_tower_02",
+      "game_id": "g_s2_01_1",
+      "clock": "04:28",
+      "clock_status": "pending",
+      "type": "tower",
+      "team_id": null,
+      "person_id": null,
+      "attribution_status": "unknown",
+      "description": "蓝方下路二塔 B-B2 出现摧毁提示",
+      "evidence_ref_id": "src_mapkit"
+    },
+    {
+      "timeline_id": "tl_tower_03",
+      "game_id": "g_s2_01_1",
+      "clock": "05:23",
+      "clock_status": "pending",
+      "type": "tower",
+      "team_id": null,
+      "person_id": null,
+      "attribution_status": "unknown",
+      "description": "蓝方中路外塔 B-M1 失守（约 05:16 出现提示）",
+      "evidence_ref_id": "src_mapkit"
+    },
+    {
+      "timeline_id": "tl_base_01",
+      "game_id": "g_s2_01_1",
+      "clock": "06:03",
+      "clock_status": "confirmed",
+      "type": "base",
+      "team_id": "t_champ",
+      "person_id": null,
+      "attribution_status": "known",
+      "description": "我方基地被摧毁（最后可见时钟）",
+      "evidence_ref_id": "src_settle_919"
+    }
+  ],
+  "announcements": [
+    {
+      "announcement_id": "a_site_01",
+      "event_id": null,
+      "title": "M1 样板说明：这是结构与视觉样板",
+      "body": "本页不是正式赛事公告；赛程、报名、奖金信息以主办方公布为准。样板只展示已核实事实与已审核内容。",
+      "publish_status": "published",
+      "date_status": "tbd",
+      "published_at": null,
+      "source_ref_id": "src_jason_20261031"
+    },
+    {
+      "announcement_id": "a_s2_01",
+      "event_id": "e_s2_01",
+      "title": "赏金赛第一把：战报与数据已整理",
+      "body": "结算 3:17、基地在 6:03 被摧毁；时间码与分路口径仍在核对，页面已标「待核实」。",
+      "publish_status": "published",
+      "date_status": "tbd",
+      "published_at": null,
+      "source_ref_id": "src_settle_919"
+    },
+    {
+      "announcement_id": "a_league_draft",
+      "event_id": "e_league_concept",
+      "title": "长周期赛事筹备中（草案，未发布）",
+      "body": "赛制、阶段、队伍与时间均待讨论，不对外发布。",
+      "publish_status": "draft",
+      "date_status": "tbd",
+      "published_at": null,
+      "source_ref_id": "src_jason_20261031"
+    }
+  ]
+}

@@ -3,3 +3,7 @@ __pycache__/
 .DS_Store
 Thumbs.db
 *.tmp
+shots/_*
+site/_*
+src/__pycache__/
+data/__pycache__/

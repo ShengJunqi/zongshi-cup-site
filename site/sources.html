@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>来源与核对 · 宗师杯</title>
+<meta name="description" content="宗师杯 M1 样板的数据来源、确认状态与待核实清单"/>
+<meta property="og:title" content="来源与核对 · 宗师杯"/>
+<meta property="og:description" content="宗师杯 M1 样板的数据来源、确认状态与待核实清单"/>
+<meta property="og:type" content="website"/>
+<link rel="stylesheet" href="assets/theme.css"/>
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+  <a class="brand" href="index.html"><div class="seal">宗</div><div><b>宗师杯</b><span>学生自己组的擂台 · 数据可追溯</span></div></a>
+  <nav class="nav"><a class="" href="index.html">首页</a><a class="" href="event.html">赛事</a><a class="" href="schedule.html">赛程</a><a class="" href="players/fangshan-de-qiu.html">选手</a></nav>
+</div></header>
+<main class="wrap">
+
+<div class="breadcrumb"><a href="index.html">首页</a> / 来源与核对</div>
+<section class="hero" style="padding-top:18px">
+  <div class="eyebrow">来源与核对</div>
+  <h1>每个数字，都尽量点得回来源。</h1>
+  <p class="lead">本页列出 M1 样板用到的数据来源、确认状态与待核实项。未确认的信息不写成确定事实；样板仍受「只公开游戏昵称与游戏数据」约束。</p>
+</section>
+
+<section class="section">
+  <div class="section-head"><h2>来源等级</h2></div>
+  <div class="grid cols3">
+    <div class="card tight"><h3>A · 逐数字可追</h3><p class="small">比分、击杀/推塔事件、视频时长：每条给来源 + 时间码/场次。</p></div>
+    <div class="card tight"><h3>B · 逐模块可追</h3><p class="small">S1 六维、英雄榜：给表名 + 源日期 + 抓取日期。</p></div>
+    <div class="card tight"><h3>C · 仅汇总</h3><p class="small">跨赛事计数：给数据文件 + 计数口径，标「计数待身份确认」。</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><h2>来源表</h2><span class="small">本样板用到的全部来源</span></div>
+  <div class="table-wrap"><table>
+    <tr><th>来源 ID</th><th>类型</th><th>定位</th><th>源日期</th><th>抓取日期</th><th>确认状态</th><th>用途</th></tr>
+    <tr id="src_settle_919"><td>src_settle_919</td><td>screenshot</td><td>赏金赛第一把 结算面板（视频 919s）</td><td>—</td><td>2026-10-28</td><td><span class="status confirmed">已确认</span></td><td class="small">比分 3:17、十人 KDA/参团</td></tr><tr id="src_identity_v01"><td>src_identity_v01</td><td>document</td><td>身份与事实修正 v01 §2.1 / 十人身份核对 v02</td><td>—</td><td>—</td><td><span class="status pending">部分确认</span></td><td class="small">一血与第一头时间存在两套记录；分路为候选</td></tr><tr id="src_rules_20261008"><td>src_rules_20261008</td><td>document</td><td>比赛规则.docx（2026-10-08 版）</td><td>2026-10-08</td><td>—</td><td><span class="status confirmed">已确认</span></td><td class="small">历史赏金赛规则；与未来赏金赛不是同一套规则</td></tr><tr id="src_fact_ledger"><td>src_fact_ledger</td><td>document</td><td>00_事实台账.md（2026-10-28 版）</td><td>2026-10-28</td><td>—</td><td><span class="status pending">部分确认</span></td><td class="small">F26 速通 2.6×、F28 队内 MVP 额外 50%；金额不展示</td></tr><tr id="src_mapkit"><td>src_mapkit</td><td>document</td><td>map_kit/README.md（地图教程例题）</td><td>—</td><td>—</td><td><span class="status pending">部分确认</span></td><td class="small">推塔时间 B-B1≈04:01、B-B2≈04:28、B-M1≈05:23；需复核原帧</td></tr><tr id="src_jason_20261031"><td>src_jason_20261031</td><td>manual</td><td>Jason 下一阶段任务大纲（2026-10-31）</td><td>2026-10-31</td><td>—</td><td><span class="status confirmed">已确认</span></td><td class="small">赛事方向、A 主视觉、范围与协作边界</td></tr>
+  </table></div>
+  <p class="small" style="margin-top:10px">部分资料在主项目目录（未随本仓库发布），公开前需执行端核对；本页不暴露本机绝对路径。</p>
+</section>
+
+<section class="section">
+  <div class="section-head"><h2>待核实清单</h2><span class="badge warn">不写成确定事实</span></div>
+  <div class="table-wrap"><table>
+    <tr><th>项</th><th>现状</th><th>处理</th></tr>
+    <tr><td>一血时间</td><td>00:41 / 00:44–00:45 两套记录</td><td>标「待核实」，统一口径后更新</td></tr>
+    <tr><td>我方第一头</td><td>01:57 / 01:56 两套记录</td><td>标「待核实」</td></tr>
+    <tr><td>S2 分路</td><td>候选、未人工确认</td><td>标「待确认」</td></tr>
+    <tr><td>比赛日期 / 正式名称</td><td>未确认</td><td>显示「日期待确认」，不写死</td></tr>
+    <tr><td>推塔时间</td><td>地图教程例题，需复核原帧</td><td>标「待核实」</td></tr>
+    <tr><td>奖金金额 / 50、67 项目名</td><td>未核实</td><td>不展示金额，只写 2.6× / MVP 额外 50%</td></tr>
+    <tr><td>身份合并</td><td>候选、未人工确认</td><td>不合并、不覆盖；页面标「身份待确认」</td></tr>
+    <tr><td>视频与选手资料授权</td><td>公开前需确认</td><td>未授权前不嵌入视频；公开范围另审</td></tr>
+  </table></div>
+</section>
+
+<section class="section">
+  <div class="section-head"><h2>隐私与纠错</h2></div>
+  <div class="note">
+    只公开游戏昵称与游戏数据，不公开真实姓名、学校、联系方式、住址或照片。<br/>
+    选手可要求隐藏或删除自己的页面/数据；发现数字有误，请联系 Jason，由运营人工核对后更新。<br/>
+    网站公开、源码公开、选手资料公开是三个不同范围，分别检查，不自动视为已授权。
+  </div>
+</section>
+
+<footer class="footer">
+  宗师杯 · 学生自行组织的王者荣耀国际服赛事（非校队）｜本页为 M1 样板，不是正式赛事公告。<br/>
+  数据来源见 <a href="sources.html">来源与核对</a>；只公开游戏昵称与游戏数据，不公开真实姓名/学校。
+  发现错误或希望隐藏数据，请联系 Jason（由运营人工处理）。<br/>
+  本页由 Jason 的 AI 小助手（DeepSeek）生成 · 未确认信息标「待核实 / 待公布」。
+</footer>
+</main>
+<nav class="mobile-nav"><a class="" href="index.html">首页</a><a class="" href="event.html">赛事</a><a class="" href="schedule.html">赛程</a><a class="" href="players/fangshan-de-qiu.html">选手</a></nav>
+</body>
+</html>
