@@ -65,10 +65,10 @@
 - 本地预览：双击 `site/index.html`（五个入口：首页 / 赛事 / 赛程 / 战报 / 样板选手 / 来源）
 - 截图：`shots/{index,event,schedule,match,player,sources}-320|390|430.png`、`shots/summary-390.png`、`shots/share-card-1080x1440.png`
 - 纪律：concept 赛事只显示「筹备方案，尚未公布」；无确认日期显示「待公布」；视频未授权不嵌入；本轮只有 1 个样板选手页。
-- **本地样板 ≠ 获准公开**；网站、源码、选手资料、视频的公开边界分别检查。
+- 公开范围：sample 只含 S2 第一把（游戏昵称与游戏数据）、不含 S1 全量、不含视频；S1 名单与视频授权仍需 Jason 确认。
 
 ## 仓库
 
-本地预览：双击 `site/index.html` ｜ GitHub：https://github.com/ShengJunqi/zongshi-cup-site
+本地预览：双击 `site/index.html` ｜ 在线预览（GitHub Pages）：https://shengjunqi.github.io/zongshi-cup-site/ ｜ 源码：https://github.com/ShengJunqi/zongshi-cup-site
 
 公开范围：网站公开、源码公开、选手资料公开是三个不同范围；先检查内容再推进公开招聘，不凭旧计划假定可部署。
