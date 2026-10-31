@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-"""检查样板页在 320/390/430 CSS 宽度下是否横向溢出。
+"""样板页自动检查：三档宽度 + 字号 / 点击区 / 表格滑动提示。
 
-做法：生成一个 iframe 测试页（iframe 宽度 = 目标宽度），
-用 Edge --allow-file-access-from-files + --dump-dom 读取每个 iframe 的 scrollWidth。
-不修改 site/ 产物；测试页用后删除。
+做法：生成 iframe 测试页（iframe 宽度 = 320/390/430），
+用 Edge --allow-file-access-from-files + --dump-dom 读取每个 iframe 内 DOM 的度量。
+任一项失败 -> 退出码 1；不修改 site/ 产物。
 """
 from __future__ import annotations
 
 import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,21 +28,50 @@ PAGES = [
 WIDTHS = [320, 390, 430]
 
 WRAPPER = """<!DOCTYPE html><html><head><meta charset="utf-8">
-<style>html,body{margin:0;background:#111;color:#fff;font:14px monospace}iframe{border:0;height:600px;display:block}</style>
+<style>html,body{margin:0;background:#111;color:#fff;font:14px monospace}iframe{border:0;height:900px;display:block}</style>
 </head><body><pre id="out">pending</pre><script>
-const pages=%PAGES%;
-const widths=%WIDTHS%;
-const results=[]; let pending=pages.length*widths.length;
+const pages=%PAGES%, widths=%WIDTHS%, results=[];
+let pending=pages.length*widths.length;
 pages.forEach(function(p){ widths.forEach(function(w){
-  const f=document.createElement('iframe');
-  f.style.width=w+'px'; f.src=p; f.title=p+' '+w;
-  f.onload=function(){ try{
-      const win=f.contentWindow, doc=f.contentDocument.documentElement;
-      results.push(p+' '+w+'px inner='+win.innerWidth+' scrollW='+doc.scrollWidth+
-        ' overflow='+(doc.scrollWidth>win.innerWidth+1?'YES':'NO'));
-    }catch(e){ results.push(p+' '+w+'px ERR '+e.message); }
+  const f=document.createElement('iframe'); f.style.width=w+'px'; f.src=p; f.title=p+' '+w;
+  f.onload=function(){
+    const fails=[];
+    try {
+      const win=f.contentWindow, doc=f.contentDocument;
+      const de=doc.documentElement;
+      if(de.scrollWidth > win.innerWidth+1) fails.push('page-overflow '+de.scrollWidth+'>'+win.innerWidth);
+      // 正文字号
+      doc.querySelectorAll('.small,.notice').forEach(function(el){
+        const fs=parseFloat(win.getComputedStyle(el).fontSize);
+        if(fs<14) fails.push('body-font '+fs.toFixed(1)+' '+el.className);
+      });
+      // 辅助字号
+      doc.querySelectorAll('.status,.src,.badge,.tag,.breadcrumb,.footer').forEach(function(el){
+        const fs=parseFloat(win.getComputedStyle(el).fontSize);
+        if(fs<12) fails.push('aux-font '+fs.toFixed(1)+' '+el.className);
+      });
+      // 点击区（按钮 / 导航；隐藏元素跳过）
+      doc.querySelectorAll('.btn,.nav a,.mobile-nav a').forEach(function(el){
+        const r=el.getBoundingClientRect();
+        if(r.width>0 && r.height>0 && r.height<44) fails.push('tap-height '+r.height.toFixed(0)+' '+el.className);
+      });
+      // 来源角标：视觉小但用 ::after 扩大点击区
+      doc.querySelectorAll('.src').forEach(function(el){
+        const after=win.getComputedStyle(el,'::after');
+        if(after.content==='none' || after.position!=='absolute') fails.push('src-hit-area');
+      });
+      // 表格：溢出时必须有滑动提示
+      doc.querySelectorAll('.table-wrap').forEach(function(wrap){
+        if(wrap.scrollWidth>wrap.clientWidth+1){
+          const hint=wrap.parentElement.querySelector('.scroll-hint');
+          const ok=hint && win.getComputedStyle(hint).display!=='none';
+          if(!ok) fails.push('table-hint');
+        }
+      });
+    } catch(e) { fails.push('ERR '+e.message); }
+    results.push(p+'|'+w+'|'+(fails.length?('FAIL '+fails.join('; ')):'OK'));
     if(--pending===0){ document.getElementById('out').textContent=results.join('\\n');
-      document.documentElement.setAttribute('data-done','1'); }
+      de.setAttribute('data-done','1'); }
   };
   document.body.appendChild(f);
 });});
@@ -56,16 +86,18 @@ def main() -> None:
     try:
         cmd = [str(EDGE), "--headless", "--disable-gpu",
                f"--user-data-dir={PROFILE}", "--no-first-run", "--no-default-browser-check",
-               "--allow-file-access-from-files", "--virtual-time-budget=6000",
+               "--allow-file-access-from-files", "--virtual-time-budget=8000",
                "--dump-dom", path.resolve().as_uri()]
         out = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8",
-                             errors="replace", timeout=90).stdout
-        if '<pre id="out">pending</pre>' in out:
-            print("WARN: iframe check did not finish; raw dump length", len(out))
-        else:
-            import re
-            m = re.search(r'<pre id="out">(.*?)</pre>', out, re.S)
-            print(m.group(1).replace("&quot;", '"').replace("&amp;", "&") if m else out[-1000:])
+                             errors="replace", timeout=120).stdout
+        import re
+        m = re.search(r'<pre id="out">(.*?)</pre>', out, re.S)
+        text = m.group(1) if m else ""
+        if not text or text == "pending":
+            print("FAIL: check did not finish")
+            sys.exit(1)
+        print(text.replace("&quot;", '"').replace("&amp;", "&"))
+        sys.exit(0 if "FAIL" not in text else 1)
     finally:
         path.unlink(missing_ok=True)
 

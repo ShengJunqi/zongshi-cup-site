@@ -38,6 +38,15 @@
       "notes": "F26 速通 2.6×、F28 队内 MVP 额外 50%；金额不展示"
     },
     {
+      "source_id": "src_base_905",
+      "kind": "video",
+      "locator": "第一把录像 905s（最后可见时钟 06:03）",
+      "source_date": null,
+      "captured_at": null,
+      "verified_status": "confirmed",
+      "notes": "最后可见时钟；基地爆炸演出在其后"
+    },
+    {
       "source_id": "src_mapkit",
       "kind": "document",
       "locator": "map_kit/README.md（地图教程例题）",
@@ -488,7 +497,7 @@
       "deaths": 2,
       "assists": 5,
       "participation": 35.0,
-      "win": false,
+      "win": true,
       "source_ref_id": "src_settle_919",
       "verification_status": "confirmed"
     },
@@ -503,7 +512,7 @@
       "deaths": 0,
       "assists": 6,
       "participation": 82.0,
-      "win": false,
+      "win": true,
       "source_ref_id": "src_settle_919",
       "verification_status": "confirmed"
     },
@@ -518,7 +527,7 @@
       "deaths": 1,
       "assists": 7,
       "participation": 76.0,
-      "win": false,
+      "win": true,
       "source_ref_id": "src_settle_919",
       "verification_status": "confirmed"
     },
@@ -533,7 +542,7 @@
       "deaths": 0,
       "assists": 9,
       "participation": 65.0,
-      "win": false,
+      "win": true,
       "source_ref_id": "src_settle_919",
       "verification_status": "confirmed"
     },
@@ -548,7 +557,7 @@
       "deaths": 0,
       "assists": 15,
       "participation": 88.0,
-      "win": false,
+      "win": true,
       "source_ref_id": "src_settle_919",
       "verification_status": "confirmed"
     }
@@ -659,8 +668,8 @@
       "team_id": "t_champ",
       "person_id": null,
       "attribution_status": "known",
-      "description": "我方基地被摧毁（最后可见时钟）",
-      "evidence_ref_id": "src_settle_919"
+      "description": "我方基地被摧毁（最后可见时钟 6:03）",
+      "evidence_ref_id": "src_base_905"
     }
   ],
   "announcements": [

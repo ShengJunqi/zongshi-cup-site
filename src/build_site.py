@@ -45,7 +45,7 @@ h2{font-size:21px;margin:0 0 10px}
 h3{font-size:16.5px;margin:0 0 6px}
 .lead{font-size:16.5px;color:#d9dde6;max-width:780px;margin:8px 0 14px}
 .muted{color:var(--muted)}
-.small{font-size:13px;color:var(--muted);line-height:1.75}
+.small{font-size:14px;color:#b9c0cf;line-height:1.75}
 .badges{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
 .badge{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12.5px;color:var(--muted);white-space:nowrap}
 .badge.gold{color:var(--gold);border-color:rgba(232,168,50,.42);background:rgba(232,168,50,.08)}
@@ -54,7 +54,7 @@ h3{font-size:16.5px;margin:0 0 6px}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:9px 18px;border-radius:10px;background:var(--gold);color:#151007;font-weight:700;font-size:15px;border:1px solid var(--gold)}
 .btn:hover{text-decoration:none;filter:brightness(1.06)}
 .btn.ghost{background:transparent;color:var(--gold2);border-color:rgba(232,168,50,.5)}
-.btn.small{min-height:40px;padding:7px 12px;font-size:13.5px}
+.btn.small{min-height:44px;padding:8px 14px;font-size:14px}
 .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
 .grid{display:grid;gap:14px}
 .cols2{grid-template-columns:repeat(2,1fr)}
@@ -64,7 +64,7 @@ h3{font-size:16.5px;margin:0 0 6px}
 .section{margin-top:34px}
 .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
 .section-head h2{margin:0;border-left:4px solid var(--gold);padding-left:10px}
-.section-head a{font-size:13.5px;white-space:nowrap}
+.section-head a{font-size:14px;white-space:nowrap}
 .score{font-family:Consolas,ui-monospace,monospace;font-size:clamp(34px,8vw,52px);letter-spacing:2px;line-height:1.05;margin:4px 0 6px}
 .score .lose{color:var(--danger)}
 .score-label{font-size:12.5px;color:var(--gold);letter-spacing:2px}
@@ -77,8 +77,9 @@ table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
 th,td{padding:10px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 tr:last-child td{border-bottom:none}
 th{color:var(--gold);font-weight:600;font-size:13px;background:rgba(232,168,50,.05);white-space:nowrap}
-.src{display:inline-block;font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:0 6px;margin-left:6px;vertical-align:2px;white-space:nowrap}
-.status{display:inline-block;font-size:11.5px;border-radius:999px;padding:1px 8px;margin-left:6px;white-space:nowrap;border:1px solid var(--line)}
+.src{position:relative;display:inline-flex;align-items:center;font-size:12px;color:#c7cdd9;border:1px solid var(--line);border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:2px;white-space:nowrap}
+.src::after{content:"";position:absolute;inset:-10px -6px}
+.status{display:inline-block;font-size:12px;border-radius:999px;padding:1px 8px;margin-left:6px;white-space:nowrap;border:1px solid var(--line)}
 .status.pending{color:var(--warn);border-color:rgba(242,185,92,.4);background:rgba(242,185,92,.08)}
 .status.candidate{color:var(--warn);border-color:rgba(242,185,92,.4);background:rgba(242,185,92,.08)}
 .status.confirmed{color:var(--ok);border-color:rgba(127,214,160,.35);background:rgba(127,214,160,.08)}
@@ -87,7 +88,7 @@ th{color:var(--gold);font-weight:600;font-size:13px;background:rgba(232,168,50,.
 .timeline li:first-child{border-top:none}
 .timeline time{font-family:Consolas,monospace;color:var(--gold2);min-width:58px;flex:none}
 .note{background:rgba(232,168,50,.06);border-left:3px solid var(--gold);border-radius:8px;padding:12px 14px;font-size:13.5px;color:#dde1e9;margin:12px 0}
-.notice{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--panel2);font-size:13.5px;color:#d7dbe4;margin:10px 0}
+.notice{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--panel2);font-size:14px;color:#d7dbe4;margin:10px 0}
 .breadcrumb{font-size:13px;color:var(--muted);margin:18px 0 0}
 .breadcrumb a{color:var(--muted)}
 .player-head{display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:18px 0 4px}
@@ -101,6 +102,8 @@ th{color:var(--gold);font-weight:600;font-size:13px;background:rgba(232,168,50,.
 .footer a{color:var(--muted)}
 details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--panel2);margin-top:10px}
 summary{cursor:pointer;font-size:14px;color:var(--gold2)}
+.scroll-hint{display:none;font-size:13px;color:var(--warn);margin:6px 0 0}
+@media(max-width:760px){.scroll-hint{display:block}}
 .videoph{aspect-ratio:16/9;border:1px dashed var(--line);border-radius:12px;display:grid;place-items:center;text-align:center;padding:16px;color:var(--muted);font-size:13.5px;background:linear-gradient(140deg,rgba(232,168,50,.05),transparent)}
 .sharebox{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;align-items:center}
 .copy-hint{font-size:12.5px;color:var(--ok)}
@@ -137,6 +140,10 @@ def fmt_num(v) -> str:
     return str(int(f)) if f == int(f) else ("%.1f" % f)
 
 
+PHASE_KIND = {"preseason": "赛前筹备", "regular": "常规赛", "playoffs": "季后赛",
+              "one_day": "单日赛", "qualifier": "资格赛", "other": "其他"}
+
+
 class Site:
     def __init__(self, data: dict):
         self.d = data
@@ -163,8 +170,11 @@ class Site:
     def status(self, value: str, kind: str | None = None) -> str:
         kind = kind or value
         label = {"pending": "待核实", "candidate": "待确认", "confirmed": "已确认",
-                 "partial": "部分确认", "unverified": "待核实", "draft": "草稿", "tbd": "待公布"}.get(value, value)
-        cls = "pending" if value in ("pending", "unverified", "partial") else ("candidate" if value == "candidate" else "confirmed")
+                 "partial": "部分确认", "unverified": "待核实", "draft": "草稿",
+                 "tbd": "待公布", "concept": "筹备（未公布）", "historical": "历史",
+                 "announced": "已公布"}.get(value, value)
+        cls = "pending" if value in ("pending", "unverified", "partial", "tbd", "concept") else (
+            "candidate" if value == "candidate" else "confirmed")
         return f'<span class="status {cls}">{esc(label)}</span>'
 
     def event_state(self, e: dict) -> str:
@@ -237,7 +247,7 @@ class Site:
     # ---------- pages ----------
     def page_index(self) -> str:
         pub = [a for a in self.announcements if a["publish_status"] == "published"]
-        concept = [e for e in self.events.values() if e["publish_status"] == "concept"]
+        concept = [e for e in self.events.values() if e["publish_status"] == "concept" and e["archive_status"] != "archived"]
         hist = self.events["e_s2_01"]
         m = self.matches["m_s2_01"]
         g = self.games["g_s2_01_1"]
@@ -287,7 +297,7 @@ class Site:
     <div class="badges"><span class="badge">历史赛事 · 已结束</span><span class="badge warn">比赛日期待确认</span><span class="badge">BO1</span></div>
     <h3 style="margin-top:10px">赏金赛第一把 · {esc(self.team_name("t_osu"))} vs {esc(self.team_name("t_champ"))}</h3>
     <div class="score">3<span class="muted"> : </span><span class="lose">17</span></div>
-    <p class="small">单局击杀数 · 基地在 6:03 被摧毁 · 胜局 0:1 · {self.src("src_settle_919")}</p>
+    <p class="small">单局击杀数 · 基地在 6:03 被摧毁 · 胜局 0:1 · {self.src("src_settle_919")}{self.src("src_base_905","基地时间")}</p>
     <a class="btn ghost small" href="{self.prefix}matches/s2-first.html">看战报 →</a>
   </article>
 </section>
@@ -302,7 +312,7 @@ class Site:
   <div class="card">
     <div class="badges"><span class="badge gold">样板选手页</span><span class="badge warn">身份 / 分路待确认</span></div>
     <h3 style="margin-top:8px">{esc(sample["display_name"])} · 铠 · 一场数据</h3>
-    <p class="small">KDA 3/3/0 · 参团 100% · 1 场 · 标签：数据不足（仅 1 场）。</p>
+    <p class="small">KDA 3/3/0 · 参团 100% · 1 场 · 标签：数据不足（仅 1 场）。{self.src("src_settle_919")}</p>
     <a class="btn ghost small" href="{self.prefix}players/{SAMPLE_SLUG}.html">查看样板选手页 →</a>
   </div>
 </section>
@@ -345,18 +355,19 @@ class Site:
   <div class="table-wrap"><table>
     <tr><th>项目</th><th>状态</th><th>说明</th></tr>
     <tr><td>活动类别</td><td>长周期正式赛事（方向）</td><td>非已公布赛制</td></tr>
-    <tr><td>阶段</td><td>{self.status(phase["window_status"])} {esc(phase["kind"])}</td><td>是否设季前/常规/季后赛待讨论</td></tr>
+    <tr><td>阶段</td><td>{self.status(phase["window_status"])} {esc(PHASE_KIND.get(phase["kind"], phase["kind"]))}</td><td>是否设季前/常规/季后赛待讨论</td></tr>
     <tr><td>规则集</td><td>{esc(rule["title"])} {self.status(rule["status"])}</td><td>规则版本与细则未定</td></tr>
     <tr><td>组队方式</td><td>待讨论</td><td>固定队 / 临时队 / 其他，未定</td></tr>
-    <tr><td>报名</td><td>未开放</td><td>不显示「报名中」；开放前会发公告</td></tr>
+    <tr><td>报名</td><td>未开放</td><td>开放前会发公告；未确认信息不展示</td></tr>
     <tr><td>赛程</td><td>待公布</td><td>无确认日期</td></tr>
   </table></div>
+  <p class="scroll-hint">← 左右滑动查看完整表格 →</p>
 </section>
 
 <section class="section">
   <div class="section-head"><h2>简版赛程</h2><span class="badge warn">赛程待公布</span></div>
   <div class="card tight">
-    <p class="small">阶段 1 · 赛前筹备（{esc(phase["kind"])}）｜ 状态：<b>待公布</b> ｜ 时间：待公布</p>
+    <p class="small">阶段 1 · 赛前筹备（{esc(PHASE_KIND.get(phase["kind"], phase["kind"]))}）｜ 状态：<b>待公布</b> ｜ 时间：待公布</p>
     <p class="small">阶段 2 及后续：是否设置、如何晋级均待讨论。</p>
   </div>
 </section>
@@ -370,7 +381,7 @@ class Site:
       <p class="small">拍卖式组队、队长资格、预算单位、队伍数、BO 局数均待设计；本轮不写成确定机制。</p></article>
     <article class="card"><div class="badges">{self.event_state(hist)}<span class="badge warn">日期待确认</span></div>
       <h3 style="margin-top:8px">{esc(hist["title"])}</h3>
-      <p class="small">历史赛事，赛制与奖励规则属于**当时的历史规则**，与未来赏金赛不是同一套规则。</p>
+      <p class="small">历史赛事，赛制与奖励规则属于当时的历史规则，与未来赏金赛不是同一套规则。</p>
       <p class="small">可查看已整理的 <a href="{self.prefix}matches/s2-first.html">单场战报</a>。</p></article>
   </div>
 </section>
@@ -381,7 +392,7 @@ class Site:
         m = self.matches["m_s2_01"]
         g = self.games["g_s2_01_1"]
         hist = self.events["e_s2_01"]
-        concept = [e for e in self.events.values() if e["publish_status"] == "concept"]
+        concept = [e for e in self.events.values() if e["publish_status"] == "concept" and e["archive_status"] != "archived"]
         concept_rows = "".join(
             f'<tr><td>{esc(e["title"])}</td><td><span class="badge warn">筹备方案，尚未公布</span></td>'
             f'<td>赛程待公布</td><td>未开放</td></tr>' for e in concept)
@@ -409,6 +420,7 @@ class Site:
     <tr><th>赛事</th><th>状态</th><th>赛程</th><th>报名</th></tr>
     {concept_rows}
   </table></div>
+  <p class="scroll-hint">← 左右滑动查看完整表格 →</p>
   <p class="small" style="margin-top:10px">赛程以主办方公告为准；筹备方案不显示「报名中」，不显示倒计时。</p>
 </section>
 """
@@ -451,7 +463,7 @@ class Site:
   <p class="muted">{esc(self.team_name("t_osu"))} vs {esc(self.team_name("t_champ"))} · 历史赛事 · 规则以当时口径为准</p>
   <div class="score-label">单局击杀数</div>
   <div class="score">3<span class="muted"> : </span><span class="lose">17</span></div>
-  <p class="small">胜局 0 : 1 · 基地在 6:03 被摧毁 · 来源：结算面板 {self.src("src_settle_919")} · 比赛日期待确认</p>
+  <p class="small">胜局 0 : 1 · 基地在 6:03 被摧毁 · 来源：结算面板 {self.src("src_settle_919")} · {self.src("src_base_905","基地时间")} · 比赛日期待确认</p>
 </section>
 
 <section class="section">
@@ -460,6 +472,7 @@ class Site:
     <tr><th>阵营</th><th>昵称</th><th>分路</th><th>K / D / A</th><th>参团率</th><th>来源</th></tr>
     {''.join(rows)}
   </table></div>
+  <p class="scroll-hint">← 左右滑动查看完整表格 →</p>
   <p class="small" style="margin-top:10px">分路来自现有档案，标注为「待确认」；参团率口径以结算面板为准。</p>
 </section>
 
@@ -477,7 +490,7 @@ class Site:
 <section class="section">
   <div class="section-head"><h2>客观事实与已确认口径</h2></div>
   <div class="note">
-    · 全队 3 个人头均来自放闪的秋的铠（1:57 / 3:23 / 4:40，其中 1:57 口径待统一）。<br/>
+    · 全队 3 个人头均来自放闪的秋的铠（约 01:57（待核实）/ 3:23 / 4:40；第一头口径待统一）。<br/>
     · 对方打野暃 8/0/6、中路沈梦溪 6/1/7（结算面板）。<br/>
     · 6:08 之前结束 → 速通奖励按 2.6 倍结算；队内评选 MVP 为猫猫（沈梦溪），额外 50%——这两项为已确认口径，具体金额与凭据待补，页面不展示金额。{self.src("src_fact_ledger")}
   </div>
@@ -510,7 +523,7 @@ class Site:
   <div class="avatar">铠</div>
   <div>
     <h1>{esc(p["display_name"])}</h1>
-    <div class="muted">我方 · 分路待确认 · 身份待确认 · 代表英雄：铠</div>
+    <div class="muted">我方 · 分路待确认 · 身份待确认 · 本场英雄：铠</div>
     <div class="badges"><span class="badge gold">M1 样板选手页</span><span class="badge warn">身份 / 分路待确认</span></div>
   </div>
 </section>
@@ -535,7 +548,7 @@ class Site:
 
 <section class="section">
   <div class="section-head"><h2>数据印象</h2></div>
-  <div class="note">全队 3 个人头都在他手上（1:57 / 3:23 / 4:40），但 3 次死亡、0 助攻——一局样本，不是实力评价。</div>
+  <div class="note">全队 3 个人头都在他手上（约 01:57（待核实）/ 3:23 / 4:40），但 3 次死亡、0 助攻——一局样本，不是实力评价。</div>
 </section>
 
 <section class="section">
@@ -618,6 +631,7 @@ function copyLink(){{
     <tr><th>来源 ID</th><th>类型</th><th>定位</th><th>源日期</th><th>抓取日期</th><th>确认状态</th><th>用途</th></tr>
     {rows}
   </table></div>
+  <p class="scroll-hint">← 左右滑动查看完整表格 →</p>
   <p class="small" style="margin-top:10px">部分资料在主项目目录（未随本仓库发布），公开前需执行端核对；本页不暴露本机绝对路径。</p>
 </section>
 
@@ -634,6 +648,7 @@ function copyLink(){{
     <tr><td>身份合并</td><td>候选、未人工确认</td><td>不合并、不覆盖；页面标「身份待确认」</td></tr>
     <tr><td>视频与选手资料授权</td><td>公开前需确认</td><td>未授权前不嵌入视频；公开范围另审</td></tr>
   </table></div>
+  <p class="scroll-hint">← 左右滑动查看完整表格 →</p>
 </section>
 
 <section class="section">
@@ -677,7 +692,7 @@ h1{{font-size:52px;letter-spacing:2px;line-height:1.1}}
 .tl h2{{font-size:15px;color:#e8a832;letter-spacing:2px;margin-bottom:8px}}
 .tl div{{display:flex;gap:14px;font-size:15px;padding:9px 0;border-top:1px dashed #263044}}
 .tl time{{font-family:Consolas,monospace;color:#f6cf7a;min-width:58px}}
-.foot{{position:absolute;left:48px;right:48px;bottom:40px;padding-top:18px;border-top:1px solid #263044;font-size:12.5px;color:#aab1c2;line-height:1.8}}
+.foot{{position:absolute;left:48px;right:48px;bottom:34px;padding-top:10px;border-top:none;font-size:12.5px;color:#aab1c2;line-height:1.8}}
 .foot b{{color:#e8a832;font-weight:600}}
 .qr{{width:120px;height:120px;border:1px dashed #263044;border-radius:10px;display:grid;place-items:center;text-align:center;font-size:11px;color:#aab1c2;line-height:1.5}}
 </style></head>
@@ -688,7 +703,7 @@ h1{{font-size:52px;letter-spacing:2px;line-height:1.1}}
 </div>
 <div class="player">
   <div class="avatar">铠</div>
-  <div><h1>放闪的秋</h1><div class="sub">我方 · 分路待确认 · 代表英雄：铠</div></div>
+  <div><h1>放闪的秋</h1><div class="sub">我方 · 分路待确认 · 本场英雄：铠</div></div>
 </div>
 <div class="badges"><span class="badge">身份 / 分路待确认</span><span class="badge">1 场样本</span><span class="badge">标签：数据不足</span></div>
 <div class="stats">
@@ -697,7 +712,7 @@ h1{{font-size:52px;letter-spacing:2px;line-height:1.1}}
   <div class="stat"><span>场次</span><b>1</b></div>
   <div class="stat"><span>本场结果</span><b>负</b></div>
 </div>
-<div class="note">全队 3 个人头都在他手上（1:57 / 3:23 / 4:40），但 3 次死亡、0 助攻——一局样本，不是实力评价。</div>
+<div class="note">全队 3 个人头都在他手上（约 01:57（待核实）/ 3:23 / 4:40），但 3 次死亡、0 助攻——一局样本，不是实力评价。</div>
 <div class="tl"><h2>高光时间线</h2>
   <div><time>01:57</time><span>全队第一头 · 时间待核实</span></div>
   <div><time>03:23</time><span>全队第二头</span></div>
@@ -734,5 +749,7 @@ h1{{font-size:52px;letter-spacing:2px;line-height:1.1}}
 
 
 if __name__ == "__main__":
+    from prepare_data import validate
     data = json.loads(DATA.read_text(encoding="utf-8"))
+    validate(data)
     Site(data).build()

@@ -30,6 +30,9 @@ SOURCES = [
     {"source_id": "src_fact_ledger", "kind": "document", "locator": "00_事实台账.md（2026-10-28 版）",
      "source_date": "2026-10-28", "captured_at": None, "verified_status": "partial",
      "notes": "F26 速通 2.6×、F28 队内 MVP 额外 50%；金额不展示"},
+    {"source_id": "src_base_905", "kind": "video", "locator": "第一把录像 905s（最后可见时钟 06:03）",
+     "source_date": None, "captured_at": None, "verified_status": "confirmed",
+     "notes": "最后可见时钟；基地爆炸演出在其后"},
     {"source_id": "src_mapkit", "kind": "document", "locator": "map_kit/README.md（地图教程例题）",
      "source_date": None, "captured_at": None, "verified_status": "partial",
      "notes": "推塔时间 B-B1≈04:01、B-B2≈04:28、B-M1≈05:23；需复核原帧"},
@@ -118,7 +121,7 @@ def build() -> dict:
         stats.append({"stat_id": f"pgs_{i:02d}", "game_id": "g_s2_01_1", "person_id": pid,
                       "team_id": team_id, "role": row["role"], "role_status": "candidate",
                       "kills": k, "deaths": d, "assists": a,
-                      "participation": row["participation"], "win": False,
+                      "participation": row["participation"], "win": team_id == "t_champ",
                       "source_ref_id": "src_settle_919", "verification_status": "confirmed"})
         snaps[team_id].append({"person_id": pid, "role": row["role"],
                                "role_status": "candidate", "joined_at": None})
@@ -185,8 +188,8 @@ def build() -> dict:
          "evidence_ref_id": "src_mapkit"},
         {"timeline_id": "tl_base_01", "game_id": "g_s2_01_1", "clock": "06:03",
          "clock_status": "confirmed", "type": "base", "team_id": "t_champ", "person_id": None,
-         "attribution_status": "known", "description": "我方基地被摧毁（最后可见时钟）",
-         "evidence_ref_id": "src_settle_919"},
+         "attribution_status": "known", "description": "我方基地被摧毁（最后可见时钟 6:03）",
+         "evidence_ref_id": "src_base_905"},
     ]
 
     announcements = [
@@ -215,48 +218,96 @@ def build() -> dict:
 
 
 def validate(data: dict) -> None:
-    """最小引用与状态校验；失败抛异常（生成器必须执行）。"""
+    """契约校验；失败抛 ValueError（构建入口必须调用）。"""
+    def need(cond, msg):
+        if not cond:
+            raise ValueError("contract violation: " + msg)
+
     src = {s["source_id"] for s in data["sources"]}
     rules = {r["ruleset_id"] for r in data["rulesets"]}
     persons = {p["person_id"] for p in data["persons"]}
     teams = {t["team_id"] for t in data["teams"]}
     events = {e["event_id"] for e in data["events"]}
     phases = {p["phase_id"] for p in data["phases"]}
-    snaps = {s["snapshot_id"] for s in data["roster_snapshots"]}
-    matches = {m["match_id"] for m in data["matches"]}
-    games = {g["game_id"] for g in data["games"]}
+    snaps = {s["snapshot_id"]: s for s in data["roster_snapshots"]}
+    matches = {m["match_id"]: m for m in data["matches"]}
+    games = {g["game_id"]: g for g in data["games"]}
+    by_game = {}
 
+    need(data.get("schema_version") == "0.3", "schema_version")
+    for s in data["sources"]:
+        need(s["kind"] in {"screenshot", "video", "spreadsheet", "document", "manual", "api"}, "source kind " + s["source_id"])
+        need(s["verified_status"] in {"confirmed", "partial", "unverified"}, "source status " + s["source_id"])
+    for r in data["rulesets"]:
+        need(r["status"] in {"historical", "concept", "announced"}, "ruleset status " + r["ruleset_id"])
+        need(r["source_ref_id"] in src, "ruleset source " + r["ruleset_id"])
     for e in data["events"]:
-        assert e["source_ref_id"] in src, e["event_id"]
-        assert e["ruleset_id"] in rules, e["event_id"]
-        if e["publish_status"] == "concept":
-            assert e["public_schedule_status"] == "tbd"
-            assert e["public_start_at"] is None and e["public_end_at"] is None
+        need(e["publish_status"] in {"concept", "pending", "announced"}, "publish " + e["event_id"])
+        need(e["archive_status"] in {"active", "historical", "archived"}, "archive " + e["event_id"])
+        need(e["progress_status"] in {"tbd", "scheduled", "live", "completed", "cancelled"}, "progress " + e["event_id"])
+        need(e["category"] in {"formal_league", "bounty_event", "ranked_night", "other"}, "category " + e["event_id"])
+        need(e["data_origin"] in {"official", "historical_export", "concept", "demo"}, "data_origin " + e["event_id"])
+        need(e["source_ref_id"] in src, "event source " + e["event_id"])
+        need(e["ruleset_id"] in rules, "event ruleset " + e["event_id"])
+        need(e["public_schedule_status"] in {"confirmed", "tbd"}, "event schedule " + e["event_id"])
+        if e["publish_status"] == "concept" or e["public_schedule_status"] == "tbd":
+            need(e["public_start_at"] is None and e["public_end_at"] is None, "concept/tbd dates " + e["event_id"])
     for p in data["phases"]:
-        assert p["event_id"] in events and p["source_ref_id"] in src
-    for s in data["roster_snapshots"]:
-        assert s["event_id"] in events and s["team_id"] in teams and s["source_ref_id"] in src
+        need(p["event_id"] in events, "phase event " + p["phase_id"])
+        need(p["kind"] in {"preseason", "regular", "playoffs", "one_day", "qualifier", "other"}, "phase kind " + p["phase_id"])
+        need(p["public_schedule_status"] in {"confirmed", "tbd"}, "phase schedule " + p["phase_id"])
+        need(p["source_ref_id"] in src, "phase source " + p["phase_id"])
+    for sid, s in snaps.items():
+        need(s["event_id"] in events, "snapshot event " + sid)
+        need(s["team_id"] in teams, "snapshot team " + sid)
+        need(s["status"] in {"confirmed", "candidate", "superseded"}, "snapshot status " + sid)
+        need(s["source_ref_id"] in src, "snapshot source " + sid)
         for en in s["entries"]:
-            assert en["person_id"] in persons
-    for m in data["matches"]:
-        assert m["event_id"] in events
-        assert m["team_a_id"] in teams and m["team_b_id"] in teams
-        assert m["team_a_roster_snapshot_id"] in snaps
-        assert m["team_b_roster_snapshot_id"] in snaps
+            need(en["person_id"] in persons, "snapshot person " + sid)
+            need(en["role_status"] in {"confirmed", "candidate", "unknown"}, "snapshot role status " + sid)
+    for mid, m in matches.items():
+        need(m["event_id"] in events, "match event " + mid)
+        need(m["team_a_id"] in teams and m["team_b_id"] in teams, "match teams " + mid)
+        need(m["team_a_roster_snapshot_id"] in snaps and m["team_b_roster_snapshot_id"] in snaps, "match rosters " + mid)
+        need(m["format"] in {"bo1", "bo3", "bo5", "bo7"}, "match format " + mid)
         cap = {"bo1": 1, "bo3": 2, "bo5": 3, "bo7": 4}[m["format"]]
-        sc = m["result"]["series_score"]
-        assert max(sc["team_a_wins"], sc["team_b_wins"]) == cap, m["match_id"]
-    for g in data["games"]:
-        assert g["match_id"] in matches and g["source_ref_id"] in src
+        res = m["result"]
+        need(res["status"] in {"pending", "confirmed"}, "match result status " + mid)
+        a, b = res["series_score"]["team_a_wins"], res["series_score"]["team_b_wins"]
+        if res["status"] == "confirmed":
+            need(max(a, b) == cap, "confirmed BO result " + mid)
+        else:
+            need(max(a, b) < cap, "pending BO result " + mid)
+    for gid, g in games.items():
+        mid = g["match_id"]
+        need(mid in matches, "game match " + gid)
+        need(g["source_ref_id"] in src, "game source " + gid)
+        need(g["stats_status"] in {"complete", "partial", "pending"}, "game stats status " + gid)
+        need(g["team_kills"]["team_a"] >= 0 and g["team_kills"]["team_b"] >= 0, "game kills " + gid)
+        need(g["team_kills"]["team_a"] != g["team_kills"]["team_b"], "game draw kills " + gid)
+        if g["winner_team_id"] is not None:
+            need(g["winner_team_id"] in {matches[mid]["team_a_id"], matches[mid]["team_b_id"]}, "game winner " + gid)
     for st in data["player_game_stats"]:
-        assert st["game_id"] in games and st["person_id"] in persons
-        assert st["team_id"] in teams and st["source_ref_id"] in src
+        g = games[st["game_id"]]
+        need(st["person_id"] in persons and st["team_id"] in teams, "stat refs " + st["stat_id"])
+        need(st["source_ref_id"] in src, "stat source " + st["stat_id"])
+        need(st["role_status"] in {"confirmed", "candidate", "unknown"}, "stat role status " + st["stat_id"])
+        need(st["verification_status"] in {"confirmed", "unverified", "disputed"}, "stat verify " + st["stat_id"])
+        if g.get("winner_team_id"):
+            need(st["win"] == (st["team_id"] == g["winner_team_id"]), "stat win mismatch " + st["stat_id"])
+        by_game.setdefault(st["game_id"], []).append(st)
     for t in data["timeline"]:
-        assert t["game_id"] in games and t["evidence_ref_id"] in src
+        need(t["game_id"] in games, "timeline game " + t["timeline_id"])
+        need(t["type"] in {"kill", "tower", "objective", "base"}, "timeline type " + t["timeline_id"])
+        need(t["clock_status"] in {"confirmed", "pending"}, "timeline clock " + t["timeline_id"])
+        need(t["attribution_status"] in {"known", "unknown"}, "timeline attribution " + t["timeline_id"])
+        need(t["evidence_ref_id"] in src, "timeline evidence " + t["timeline_id"])
     for a in data["announcements"]:
-        assert a["source_ref_id"] in src
+        need(a["publish_status"] in {"draft", "published"}, "announcement status " + a["announcement_id"])
+        need(a["date_status"] in {"confirmed", "tbd"}, "announcement date " + a["announcement_id"])
+        need(a["source_ref_id"] in src, "announcement source " + a["announcement_id"])
         if a["event_id"]:
-            assert a["event_id"] in events
+            need(a["event_id"] in events, "announcement event " + a["announcement_id"])
 
 
 if __name__ == "__main__":
