@@ -41,6 +41,40 @@ class ContractTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate(d)
 
+    def test_bo_draw_rejected(self) -> None:
+        d = copy.deepcopy(self.data)
+        m = d["matches"][0]
+        m["result"]["series_score"] = {"team_a_wins": 1, "team_b_wins": 1}
+        with self.assertRaises(ValueError):
+            validate(d)
+
+    def test_negative_wins_rejected(self) -> None:
+        d = copy.deepcopy(self.data)
+        d["matches"][0]["result"]["series_score"] = {"team_a_wins": -1, "team_b_wins": 2}
+        with self.assertRaises(ValueError):
+            validate(d)
+
+    def test_winner_side_mismatch_rejected(self) -> None:
+        d = copy.deepcopy(self.data)
+        d["matches"][0]["result"]["winner_team_id"] = "t_osu"
+        with self.assertRaises(ValueError):
+            validate(d)
+
+    def test_phase_ruleset_missing_rejected(self) -> None:
+        d = copy.deepcopy(self.data)
+        d["phases"][0]["ruleset_id"] = "missing_ruleset"
+        with self.assertRaises(ValueError):
+            validate(d)
+
+    def test_valid_pending_bo(self) -> None:
+        d = copy.deepcopy(self.data)
+        m = d["matches"][0]
+        m["format"] = "bo3"
+        m["result"] = {"winner_team_id": None,
+                       "series_score": {"team_a_wins": 1, "team_b_wins": 0},
+                       "status": "pending"}
+        validate(d)
+
     def test_win_mismatch_rejected(self) -> None:
         d = copy.deepcopy(self.data)
         for st in d["player_game_stats"]:

@@ -200,7 +200,7 @@ def build() -> dict:
          "source_ref_id": "src_jason_20261031"},
         {"announcement_id": "a_s2_01", "event_id": "e_s2_01",
          "title": "赏金赛第一把：战报与数据已整理",
-         "body": "结算 3:17、基地在 6:03 被摧毁；时间码与分路口径仍在核对，页面已标「待核实」。",
+         "body": "结算 3:17、最后可见时钟 6:03（基地爆炸演出在其后）；时间码与分路口径仍在核对，页面已标「待核实」。",
          "publish_status": "published", "date_status": "tbd", "published_at": None,
          "source_ref_id": "src_settle_919"},
         {"announcement_id": "a_league_draft", "event_id": "e_league_concept",
@@ -257,6 +257,8 @@ def validate(data: dict) -> None:
         need(p["kind"] in {"preseason", "regular", "playoffs", "one_day", "qualifier", "other"}, "phase kind " + p["phase_id"])
         need(p["public_schedule_status"] in {"confirmed", "tbd"}, "phase schedule " + p["phase_id"])
         need(p["source_ref_id"] in src, "phase source " + p["phase_id"])
+        if p.get("ruleset_id") is not None:
+            need(p["ruleset_id"] in rules, "phase ruleset " + p["phase_id"])
     for sid, s in snaps.items():
         need(s["event_id"] in events, "snapshot event " + sid)
         need(s["team_id"] in teams, "snapshot team " + sid)
@@ -270,14 +272,23 @@ def validate(data: dict) -> None:
         need(m["team_a_id"] in teams and m["team_b_id"] in teams, "match teams " + mid)
         need(m["team_a_roster_snapshot_id"] in snaps and m["team_b_roster_snapshot_id"] in snaps, "match rosters " + mid)
         need(m["format"] in {"bo1", "bo3", "bo5", "bo7"}, "match format " + mid)
+        if m.get("phase_id") is not None:
+            need(m["phase_id"] in phases, "match phase " + mid)
         cap = {"bo1": 1, "bo3": 2, "bo5": 3, "bo7": 4}[m["format"]]
         res = m["result"]
         need(res["status"] in {"pending", "confirmed"}, "match result status " + mid)
         a, b = res["series_score"]["team_a_wins"], res["series_score"]["team_b_wins"]
+        need(isinstance(a, int) and isinstance(b, int) and a >= 0 and b >= 0, "BO wins int/non-negative " + mid)
+        need(a + b <= cap, "BO wins exceed cap " + mid)
         if res["status"] == "confirmed":
-            need(max(a, b) == cap, "confirmed BO result " + mid)
+            need((a == cap and b < cap) or (b == cap and a < cap), "confirmed BO winner " + mid)
+            need(res.get("winner_team_id") in teams, "confirmed match winner " + mid)
+            if a == cap:
+                need(res["winner_team_id"] == m["team_a_id"], "winner side A " + mid)
+            else:
+                need(res["winner_team_id"] == m["team_b_id"], "winner side B " + mid)
         else:
-            need(max(a, b) < cap, "pending BO result " + mid)
+            need(a < cap and b < cap, "pending BO result " + mid)
     for gid, g in games.items():
         mid = g["match_id"]
         need(mid in matches, "game match " + gid)
@@ -287,6 +298,19 @@ def validate(data: dict) -> None:
         need(g["team_kills"]["team_a"] != g["team_kills"]["team_b"], "game draw kills " + gid)
         if g["winner_team_id"] is not None:
             need(g["winner_team_id"] in {matches[mid]["team_a_id"], matches[mid]["team_b_id"]}, "game winner " + gid)
+            ka, kb = g["team_kills"]["team_a"], g["team_kills"]["team_b"]
+            need((g["winner_team_id"] == matches[mid]["team_a_id"] and ka > kb) or
+                 (g["winner_team_id"] == matches[mid]["team_b_id"] and kb > ka), "game winner vs kills " + gid)
+        for key in ("actual_team_a_roster_snapshot_id", "actual_team_b_roster_snapshot_id"):
+            if g.get(key):
+                need(g[key] in snaps, "game roster " + gid)
+    for mid, m in matches.items():
+        gs = [g for g in games.values() if g["match_id"] == mid and g.get("winner_team_id")]
+        if m["result"]["status"] == "confirmed" and gs:
+            wa = sum(1 for g in gs if g["winner_team_id"] == m["team_a_id"])
+            wb = sum(1 for g in gs if g["winner_team_id"] == m["team_b_id"])
+            need(wa == m["result"]["series_score"]["team_a_wins"] and wb == m["result"]["series_score"]["team_b_wins"],
+                 "series vs games " + mid)
     for st in data["player_game_stats"]:
         g = games[st["game_id"]]
         need(st["person_id"] in persons and st["team_id"] in teams, "stat refs " + st["stat_id"])

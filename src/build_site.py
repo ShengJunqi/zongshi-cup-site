@@ -33,7 +33,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var
 .brand{display:flex;align-items:center;gap:10px;padding:9px 0;min-width:0}
 .seal{width:38px;height:38px;flex:none;border:2px solid var(--gold);border-radius:8px;display:grid;place-items:center;font:700 18px/1 "STKaiti","KaiTi",serif;color:var(--gold)}
 .brand b{font-size:18px;letter-spacing:2px;display:block;line-height:1.15}
-.brand span{display:block;font-size:11px;color:var(--muted);letter-spacing:.4px}
+.brand span{display:block;font-size:12px;color:var(--muted);letter-spacing:.4px}
 .nav{display:flex;gap:4px;margin-left:auto}
 .nav a{display:flex;align-items:center;min-height:44px;padding:0 12px;font-size:14.5px;color:var(--muted);border-radius:8px}
 .nav a.on{color:var(--gold);background:rgba(232,168,50,.1)}
@@ -77,8 +77,7 @@ table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
 th,td{padding:10px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 tr:last-child td{border-bottom:none}
 th{color:var(--gold);font-weight:600;font-size:13px;background:rgba(232,168,50,.05);white-space:nowrap}
-.src{position:relative;display:inline-flex;align-items:center;font-size:12px;color:#c7cdd9;border:1px solid var(--line);border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:2px;white-space:nowrap}
-.src::after{content:"";position:absolute;inset:-10px -6px}
+.src{display:inline-block;font-size:12px;color:#b9c0cf;padding:12px 10px;margin:-12px -10px;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
 .status{display:inline-block;font-size:12px;border-radius:999px;padding:1px 8px;margin-left:6px;white-space:nowrap;border:1px solid var(--line)}
 .status.pending{color:var(--warn);border-color:rgba(242,185,92,.4);background:rgba(242,185,92,.08)}
 .status.candidate{color:var(--warn);border-color:rgba(242,185,92,.4);background:rgba(242,185,92,.08)}
@@ -87,7 +86,7 @@ th{color:var(--gold);font-weight:600;font-size:13px;background:rgba(232,168,50,.
 .timeline li{display:flex;gap:12px;padding:10px 0;border-top:1px dashed var(--line);font-size:14px}
 .timeline li:first-child{border-top:none}
 .timeline time{font-family:Consolas,monospace;color:var(--gold2);min-width:58px;flex:none}
-.note{background:rgba(232,168,50,.06);border-left:3px solid var(--gold);border-radius:8px;padding:12px 14px;font-size:13.5px;color:#dde1e9;margin:12px 0}
+.note{background:rgba(232,168,50,.06);border-left:3px solid var(--gold);border-radius:8px;padding:12px 14px;font-size:14px;color:#dde1e9;margin:12px 0}
 .notice{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--panel2);font-size:14px;color:#d7dbe4;margin:10px 0}
 .breadcrumb{font-size:13px;color:var(--muted);margin:18px 0 0}
 .breadcrumb a{color:var(--muted)}
@@ -111,7 +110,7 @@ summary{cursor:pointer;font-size:14px;color:var(--gold2)}
  .wrap{padding:0 14px 96px}
  .nav{display:none}
  .mobile-nav{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;bottom:0;left:0;right:0;z-index:30;background:#0b0f18;border-top:1px solid var(--line);padding:2px 4px calc(2px + env(safe-area-inset-bottom))}
- .mobile-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:52px;font-size:11.5px;color:var(--muted);gap:0}
+ .mobile-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:52px;font-size:12.5px;color:var(--muted);gap:0}
  
  .mobile-nav a.on{color:var(--gold)}
  .cols2,.cols3{grid-template-columns:1fr}
@@ -151,6 +150,8 @@ class Site:
         self.persons = {p["person_id"]: p for p in data["persons"]}
         self.teams = {t["team_id"]: t for t in data["teams"]}
         self.events = {e["event_id"]: e for e in data["events"]}
+        self.public_events = {eid: e for eid, e in self.events.items()
+                              if e["archive_status"] != "archived"}
         self.phases = {p["phase_id"]: p for p in data["phases"]}
         self.matches = {m["match_id"]: m for m in data["matches"]}
         self.games = {g["game_id"]: g for g in data["games"]}
@@ -192,6 +193,28 @@ class Site:
         if e["public_schedule_status"] != "confirmed":
             return "日期待确认"
         return f'{e["public_start_at"] or ""}'
+
+    def clock_note(self) -> str:
+        g = self.games["g_s2_01_1"]
+        return f"最后可见时钟 {g['duration_clock']}（基地爆炸演出在其后）"
+
+    def highlight_text(self) -> str:
+        ts = [t for t in self.timeline if t["type"] == "kill" and t["person_id"] == "p_0002"]
+        parts = []
+        for t in ts:
+            parts.append(("约 " + t["clock"] + "（待核实）") if t["clock_status"] != "confirmed" else t["clock"])
+        return " / ".join(parts) if parts else "—"
+
+    def ev(self, eid: str) -> dict:
+        e = self.events[eid]
+        if e["archive_status"] == "archived":
+            raise RuntimeError("archived event referenced by public page: " + eid)
+        return e
+
+    def mv(self, mid: str) -> dict:
+        m = self.matches[mid]
+        self.ev(m["event_id"])
+        return m
 
     def team_name(self, tid: str) -> str:
         return self.teams.get(tid, {}).get("name", tid)
@@ -247,9 +270,9 @@ class Site:
     # ---------- pages ----------
     def page_index(self) -> str:
         pub = [a for a in self.announcements if a["publish_status"] == "published"]
-        concept = [e for e in self.events.values() if e["publish_status"] == "concept" and e["archive_status"] != "archived"]
-        hist = self.events["e_s2_01"]
-        m = self.matches["m_s2_01"]
+        concept = [e for e in self.public_events.values() if e["publish_status"] == "concept"]
+        hist = self.ev("e_s2_01")
+        m = self.mv("m_s2_01")
         g = self.games["g_s2_01_1"]
         ann_html = "".join(
             f'<article class="card tight"><h3>{esc(a["title"])}</h3>'
@@ -297,7 +320,7 @@ class Site:
     <div class="badges"><span class="badge">历史赛事 · 已结束</span><span class="badge warn">比赛日期待确认</span><span class="badge">BO1</span></div>
     <h3 style="margin-top:10px">赏金赛第一把 · {esc(self.team_name("t_osu"))} vs {esc(self.team_name("t_champ"))}</h3>
     <div class="score">3<span class="muted"> : </span><span class="lose">17</span></div>
-    <p class="small">单局击杀数 · 基地在 6:03 被摧毁 · 胜局 0:1 · {self.src("src_settle_919")}{self.src("src_base_905","基地时间")}</p>
+    <p class="small">单局击杀数 · {self.clock_note()} · 胜局 0:1 · 来源：{self.src("src_settle_919","结算面板")} · {self.src("src_base_905","905s")}</p>
     <a class="btn ghost small" href="{self.prefix}matches/s2-first.html">看战报 →</a>
   </article>
 </section>
@@ -329,9 +352,9 @@ class Site:
         return self.layout("首页", "home", body, "宗师杯：公告、赛程、战报与选手档案")
 
     def page_event(self) -> str:
-        league = self.events["e_league_concept"]
-        bounty = self.events["e_bounty_concept"]
-        hist = self.events["e_s2_01"]
+        league = self.ev("e_league_concept")
+        bounty = self.ev("e_bounty_concept")
+        hist = self.ev("e_s2_01")
         lease_ann = [a for a in self.announcements
                      if a["event_id"] == league["event_id"] and a["publish_status"] == "published"]
         rule = self.rulesets[league["ruleset_id"]]
@@ -389,10 +412,10 @@ class Site:
         return self.layout("赛事", "event", body, "宗师杯赛事结构：长周期赛事、赏金淘汰赛与历史赛事")
 
     def page_schedule(self) -> str:
-        m = self.matches["m_s2_01"]
+        m = self.mv("m_s2_01")
         g = self.games["g_s2_01_1"]
-        hist = self.events["e_s2_01"]
-        concept = [e for e in self.events.values() if e["publish_status"] == "concept" and e["archive_status"] != "archived"]
+        hist = self.ev("e_s2_01")
+        concept = [e for e in self.public_events.values() if e["publish_status"] == "concept"]
         concept_rows = "".join(
             f'<tr><td>{esc(e["title"])}</td><td><span class="badge warn">筹备方案，尚未公布</span></td>'
             f'<td>赛程待公布</td><td>未开放</td></tr>' for e in concept)
@@ -427,9 +450,9 @@ class Site:
         return self.layout("赛程", "schedule", body, "宗师杯赛程：已结束比赛与待公布状态")
 
     def page_match(self) -> str:
-        m = self.matches["m_s2_01"]
+        m = self.mv("m_s2_01")
         g = self.games["g_s2_01_1"]
-        hist = self.events["e_s2_01"]
+        hist = self.ev("e_s2_01")
         teams = [("t_osu", "team_a"), ("t_champ", "team_b")]
         rows = []
         for tid, key in teams:
@@ -463,7 +486,7 @@ class Site:
   <p class="muted">{esc(self.team_name("t_osu"))} vs {esc(self.team_name("t_champ"))} · 历史赛事 · 规则以当时口径为准</p>
   <div class="score-label">单局击杀数</div>
   <div class="score">3<span class="muted"> : </span><span class="lose">17</span></div>
-  <p class="small">胜局 0 : 1 · 基地在 6:03 被摧毁 · 来源：结算面板 {self.src("src_settle_919")} · {self.src("src_base_905","基地时间")} · 比赛日期待确认</p>
+  <p class="small">胜局 0 : 1 · {self.clock_note()} · 来源：{self.src("src_settle_919","结算面板")} · {self.src("src_base_905","905s")} · 比赛日期待确认</p>
 </section>
 
 <section class="section">
@@ -490,7 +513,7 @@ class Site:
 <section class="section">
   <div class="section-head"><h2>客观事实与已确认口径</h2></div>
   <div class="note">
-    · 全队 3 个人头均来自放闪的秋的铠（约 01:57（待核实）/ 3:23 / 4:40；第一头口径待统一）。<br/>
+    · 全队 3 个人头均来自放闪的秋的铠（{self.highlight_text()}；第一头口径待统一）。<br/>
     · 对方打野暃 8/0/6、中路沈梦溪 6/1/7（结算面板）。<br/>
     · 6:08 之前结束 → 速通奖励按 2.6 倍结算；队内评选 MVP 为猫猫（沈梦溪），额外 50%——这两项为已确认口径，具体金额与凭据待补，页面不展示金额。{self.src("src_fact_ledger")}
   </div>
@@ -509,6 +532,7 @@ class Site:
         return self.layout("赏金赛第一把战报", "schedule", body, "赏金赛第一把：3:17、6:03 基地、时间线与双份数据")
 
     def page_player(self) -> str:
+        self.ev("e_s2_01")
         p = self.persons["p_0002"]
         st = next(s for s in self.stats if s["person_id"] == "p_0002")
         kills = [t for t in self.timeline if t["type"] == "kill" and t["person_id"] == "p_0002"]
@@ -536,7 +560,7 @@ class Site:
     <div class="item"><span>场次</span><b>1</b></div>
     <div class="item"><span>本场结果</span><b>负</b></div>
   </div>
-  <p class="small" style="margin-top:10px">来源：结算面板 {self.src("src_settle_919")} · 分路：{esc(st["role"] or "—")} {self.status(st["role_status"])} · 仅为 1 场，不代表长期实力。</p>
+  <p class="small" style="margin-top:10px">来源：{self.src("src_settle_919","结算面板")} · 分路：{esc(st["role"] or "—")} {self.status(st["role_status"])} · 仅为 1 场，不代表长期实力。</p>
 </section>
 
 <section class="section">
@@ -548,7 +572,7 @@ class Site:
 
 <section class="section">
   <div class="section-head"><h2>数据印象</h2></div>
-  <div class="note">全队 3 个人头都在他手上（约 01:57（待核实）/ 3:23 / 4:40），但 3 次死亡、0 助攻——一局样本，不是实力评价。</div>
+  <div class="note">全队 3 个人头都在他手上（{self.highlight_text()}），但 3 次死亡、0 助攻——一局样本，不是实力评价。</div>
 </section>
 
 <section class="section">
@@ -560,7 +584,7 @@ class Site:
 <section class="section">
   <div class="section-head"><h2>比赛记录</h2></div>
   <div class="card tight">
-    <p class="small">1 场 · 赏金赛第一把 · 单局击杀 3 : 17 · 基地 6:03 · 负。</p>
+    <p class="small">1 场 · 赏金赛第一把 · 单局击杀 3 : 17 · 最后可见时钟 6:03 · 负。</p>
     <a class="btn ghost small" href="{self.prefix}matches/s2-first.html">查看完整战报 →</a>
   </div>
 </section>
@@ -712,13 +736,13 @@ h1{{font-size:52px;letter-spacing:2px;line-height:1.1}}
   <div class="stat"><span>场次</span><b>1</b></div>
   <div class="stat"><span>本场结果</span><b>负</b></div>
 </div>
-<div class="note">全队 3 个人头都在他手上（约 01:57（待核实）/ 3:23 / 4:40），但 3 次死亡、0 助攻——一局样本，不是实力评价。</div>
+<div class="note">全队 3 个人头都在他手上（{self.highlight_text()}），但 3 次死亡、0 助攻——一局样本，不是实力评价。</div>
 <div class="tl"><h2>高光时间线</h2>
   <div><time>01:57</time><span>全队第一头 · 时间待核实</span></div>
   <div><time>03:23</time><span>全队第二头</span></div>
   <div><time>04:40</time><span>全队第三头</span></div>
 </div>
-<div class="match"><h2>比赛记录</h2><div>赏金赛第一把 · 单局击杀 <b>3 : 17</b> · 基地 6:03 · 负 · BO1</div></div>
+<div class="match"><h2>比赛记录</h2><div>赏金赛第一把 · 单局击杀 <b>3 : 17</b> · 最后可见时钟 6:03 · 负 · BO1</div></div>
 <div class="foot">
   <b>数据来源：</b>赏金赛第一把结算面板 + 身份与事实修正 + map_kit（推塔）；1 场样本，不代表长期实力。<br/>
   <b>只公开游戏昵称与游戏数据</b>，不公开真实姓名/学校；未确认信息标「待核实」。<br/>

@@ -41,31 +41,36 @@ pages.forEach(function(p){ widths.forEach(function(w){
       const de=doc.documentElement;
       if(de.scrollWidth > win.innerWidth+1) fails.push('page-overflow '+de.scrollWidth+'>'+win.innerWidth);
       // 正文字号
-      doc.querySelectorAll('.small,.notice').forEach(function(el){
+      doc.querySelectorAll('.small,.notice,.note').forEach(function(el){
         const fs=parseFloat(win.getComputedStyle(el).fontSize);
         if(fs<14) fails.push('body-font '+fs.toFixed(1)+' '+el.className);
       });
       // 辅助字号
-      doc.querySelectorAll('.status,.src,.badge,.tag,.breadcrumb,.footer').forEach(function(el){
+      doc.querySelectorAll('.status,.src,.badge,.tag,.breadcrumb,.footer,.brand span,.mobile-nav a').forEach(function(el){
         const fs=parseFloat(win.getComputedStyle(el).fontSize);
         if(fs<12) fails.push('aux-font '+fs.toFixed(1)+' '+el.className);
       });
-      // 点击区（按钮 / 导航；隐藏元素跳过）
-      doc.querySelectorAll('.btn,.nav a,.mobile-nav a').forEach(function(el){
+      // 关键点击区：宽高均 >=44（隐藏元素跳过）
+      doc.querySelectorAll('.btn,.nav a,.mobile-nav a,.src').forEach(function(el){
         const r=el.getBoundingClientRect();
-        if(r.width>0 && r.height>0 && r.height<44) fails.push('tap-height '+r.height.toFixed(0)+' '+el.className);
+        if(r.width>0 && r.height>0 && (r.height<44 || r.width<44)) {
+          fails.push('tap-size '+r.width.toFixed(0)+'x'+r.height.toFixed(0)+' '+el.className);
+        }
       });
-      // 来源角标：视觉小但用 ::after 扩大点击区
-      doc.querySelectorAll('.src').forEach(function(el){
-        const after=win.getComputedStyle(el,'::after');
-        if(after.content==='none' || after.position!=='absolute') fails.push('src-hit-area');
-      });
-      // 表格：溢出时必须有滑动提示
+      // 表格：溢出时必须有滑动提示，且能滚到最后一列
       doc.querySelectorAll('.table-wrap').forEach(function(wrap){
         if(wrap.scrollWidth>wrap.clientWidth+1){
           const hint=wrap.parentElement.querySelector('.scroll-hint');
           const ok=hint && win.getComputedStyle(hint).display!=='none';
           if(!ok) fails.push('table-hint');
+          wrap.scrollLeft=wrap.scrollWidth;
+          const last=wrap.querySelector('tr:last-child td:last-child, tr:last-child th:last-child');
+          if(!last){ fails.push('table-last-cell'); }
+          else {
+            const wr=wrap.getBoundingClientRect(), lr=last.getBoundingClientRect();
+            if(lr.right>wr.right+1) fails.push('table-last-not-reachable');
+          }
+          wrap.scrollLeft=0;
         }
       });
     } catch(e) { fails.push('ERR '+e.message); }
