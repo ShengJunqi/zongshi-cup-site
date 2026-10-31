@@ -283,7 +283,7 @@ class Site:
             f'<article class="card"><div class="badges">{self.event_state(e)}</div>'
             f'<h3 style="margin-top:8px">{esc(e["title"])}</h3>'
             f'<p class="small">{esc(e["summary"])}</p>'
-            f'<p class="small">规则状态：待定 · 赛程：<b>待公布</b> · 报名：未开放（不显示「报名中」）</p>'
+            f'<p class="small">规则状态：待定 · 赛程：<b>待公布</b> · 报名：未开放</p>'
             f'<a class="btn ghost small" href="{self.prefix}event.html">查看赛事结构 →</a></article>'
             for e in concept)
         sample = self.persons["p_0002"]
