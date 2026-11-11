@@ -35,7 +35,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var
 .brand b{font-size:18px;letter-spacing:2px;display:block;line-height:1.15}
 .brand span{display:block;font-size:12px;color:var(--muted);letter-spacing:.4px}
 .nav{display:flex;gap:4px;margin-left:auto}
-.nav a{display:flex;align-items:center;min-height:44px;padding:0 12px;font-size:14.5px;color:var(--muted);border-radius:8px}
+.nav a{display:flex;align-items:center;min-height:44px;padding:0 12px;font-size:14.5px;color:var(--muted);border-radius:8px;white-space:nowrap}
 .nav a.on{color:var(--gold);background:rgba(232,168,50,.1)}
 .mobile-nav{display:none}
 .hero{padding:38px 0 20px}
@@ -109,7 +109,7 @@ summary{cursor:pointer;font-size:14px;color:var(--gold2)}
 @media(max-width:760px){
  .wrap{padding:0 14px 96px}
  .nav{display:none}
- .mobile-nav{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;bottom:0;left:0;right:0;z-index:30;background:#0b0f18;border-top:1px solid var(--line);padding:2px 4px calc(2px + env(safe-area-inset-bottom))}
+ .mobile-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;bottom:0;left:0;right:0;z-index:30;background:#0b0f18;border-top:1px solid var(--line);padding:2px 4px calc(2px + env(safe-area-inset-bottom))}
  .mobile-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:52px;font-size:12.5px;color:var(--muted);gap:0}
  
  .mobile-nav a.on{color:var(--gold)}
@@ -237,6 +237,9 @@ class Site:
         mobile = "".join(
             f'<a class="{"on" if key == active else ""}" href="{self.prefix}{href}">{label}</a>'
             for href, label, key in nav)
+        simulator_link = '<a href="https://shengjunqi.github.io/hok-simulator-web/" rel="external" aria-label="模拟器（研究演示）">模拟器</a>'
+        nav_html += simulator_link
+        mobile += simulator_link
         return f"""<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -345,7 +348,7 @@ class Site:
   <div class="grid cols3">
     <div class="card tight"><h3>来源与核对</h3><p class="small">每个数字点回来源，未确认项单独列出。</p><a class="small" href="{self.prefix}sources.html">查看来源 →</a></div>
     <div class="card tight"><h3>视频与名场面</h3><p class="small">现有剪辑 2 支；待授权确认后接入，本轮只留占位。</p><span class="badge">待授权接入</span></div>
-    <div class="card tight"><h3>数据与模型</h3><p class="small">后续接入建模会话已审核的分析；未校准胜率不展示。</p><span class="badge">后续版本</span></div>
+    <div class="card tight"><h3>模型 / 模拟器</h3><p class="small">研究与教学用合成演示，未经校准，不代表真实胜率或赛事结论；默认 CN，HOK 独立分库。</p><a class="small" href="https://shengjunqi.github.io/hok-simulator-web/" rel="external">打开模拟器 →</a></div>
   </div>
 </section>
 """
