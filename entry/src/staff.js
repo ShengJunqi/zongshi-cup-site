@@ -28,3 +28,12 @@ action("export",async()=>{if(!state)return;const url=URL.createObjectURL(new Blo
 
 
 get("duration").onchange=()=>{proposal=null;get("makePool").hidden=true;get("suggestText").textContent="";};
+
+let historyCursor=null;
+async function showHistory(cursor){
+ const page=await api("history-stats",{after:cursor||"",limit:20});historyCursor=page.next;
+ get("historyList").replaceChildren();for(const row of page.items)line("historyList",row.nickname+" · "+row.sources.map(s=>s.source_id+" / "+s.source_cell).join("；"));
+ get("historyStatus").textContent=page.count+" 个未核验称呼，"+page.evidence+" 个来源定位。";get("historyNext").hidden=!historyCursor;
+}
+action("history",()=>showHistory(""));
+action("historyNext",()=>showHistory(historyCursor));

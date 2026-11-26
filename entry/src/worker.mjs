@@ -131,6 +131,44 @@ function suggest(teams,duration){
  }return rounds;
 }
 const pairings=[[[0,3],[1,2]],[[0,2],[1,3]],[[0,1],[2,3]]];
+function cleanHistorical(record){
+  check(record&&typeof record==="object"&&Object.keys(record).every(k=>["source_key","nickname","sources"].includes(k)),400,"历史档案只接收游戏称呼和证据定位。");
+  const key=text(record.source_key,21,"历史标识");check(/^nick-[0-9a-f]{16}$/.test(key),400,"历史标识格式错误。");
+  const nickname=text(record.nickname,64,"游戏称呼"),norm=nickname.normalize("NFKC").toLowerCase().replace(/\s+/g," ").trim();
+  check(!/[\x00-\x1f\x7f]/.test(nickname),400,"游戏称呼含有不可见字符。");
+  check(Array.isArray(record.sources)&&record.sources.length>0&&record.sources.length<=12,400,"请提供 1 至 12 个来源定位。");
+  for(const s of record.sources){
+   check(s&&Object.keys(s).every(k=>["source_id","source_cell"].includes(k))&&["SRC-XLS","SRC-ALIAS"].includes(s.source_id),400,"不支持的证据来源。");
+   const cell=text(s.source_cell,64,"来源单元格");check(/^[\p{L}\p{N}_ -]{1,30}!\$?[A-Z]{1,3}\$?[1-9][0-9]{0,6}(?::\$?[A-Z]{1,3}\$?[1-9][0-9]{0,6})?$/u.test(cell),400,"历史来源须定位到单元格或范围。");
+  }
+  return {key,nickname,norm,sources:record.sources};
+}
+async function importHistory(db,data){
+ const rows=data.records;
+ check(Array.isArray(rows)&&rows.length>0&&rows.length<=20,400,"每次请导入 1 至 20 条历史档案。");
+ const clean=rows.map(cleanHistorical);
+ // Primary/unique checks make both retries and provenance additions idempotent. An identity conflict rolls back the entire batch.
+ const ops=[];
+ for(const r of clean){
+   ops.push(stmt(db,"INSERT INTO historical_profiles(source_key,nickname,nickname_norm) VALUES(?,?,?) ON CONFLICT(source_key) DO UPDATE SET nickname_norm=CASE WHEN historical_profiles.nickname_norm=excluded.nickname_norm THEN historical_profiles.nickname_norm ELSE NULL END",r.key,r.nickname,r.norm));
+   for(const s of r.sources)ops.push(stmt(db,"INSERT INTO historical_sources(source_key,source_id,source_cell) VALUES(?,?,?) ON CONFLICT DO NOTHING",r.key,s.source_id,s.source_cell));
+ }
+ try{await db.batch(ops);}catch{fail(409,"历史标识或称呼存在冲突，本批未导入。请核对源表后重试。");}
+ const n=await one(db,"SELECT COUNT(*) AS n FROM historical_profiles");return {accepted:clean.length,count:n.n,status:"historical_only",identity:"unverified"};
+}
+async function historyPage(db,data){
+ const after=data.after??"";
+ check(typeof after==="string"&&(after===""||/^nick-[0-9a-f]{16}$/.test(after)),400,"分页标识错误。");
+ const limit=data.limit??20;check(Number.isInteger(limit)&&limit>=1&&limit<=50,400,"请检查分页数量。");
+ const [count,evidence,rows]=await Promise.all([one(db,"SELECT COUNT(*) AS n FROM historical_profiles"),one(db,"SELECT COUNT(*) AS n FROM historical_sources"),all(db,"SELECT source_key,nickname FROM historical_profiles WHERE source_key>? ORDER BY source_key LIMIT ?",after,limit+1)]);
+ const more=rows.length>limit,items=rows.slice(0,limit);
+ if(items.length){
+   const keys=items.map(x=>x.source_key);
+   const links=await all(db,"SELECT source_key,source_id,source_cell FROM historical_sources WHERE source_key IN ("+keys.map(()=>"?").join(",")+") ORDER BY source_key,source_id,source_cell",...keys);
+   for(const it of items)it.sources=links.filter(x=>x.source_key===it.source_key).map(({source_id,source_cell})=>({source_id,source_cell}));
+ }
+ return {count:count.n,evidence:evidence.n,status:"historical_only",identity:"unverified",items,next:more?items.at(-1).source_key:null};
+}
 async function admin(req,env,path,data){
   const owner=String(env.OPS_OWNER_EMAIL||"").trim().toLowerCase();
   const ownerSession=owner&&req.headers.get("oai-authenticated-user-id")&&((req.headers.get("oai-authenticated-user-email")||"").trim().toLowerCase()===owner);
@@ -140,6 +178,8 @@ async function admin(req,env,path,data){
   const tokenOk=tokenSet&&supplied.startsWith("Bearer ")&&supplied.length<=520&&await digest(supplied.slice(7))===await digest(env.OPS_ADMIN_TOKEN);
   if(!tokenOk&&!(ownerSession&&req.headers.get("Origin")===new URL(req.url).origin))fail(403,"请用主办方账号登录，或提供有效的赛务密钥。");
   const db=env.DB;
+  if(path==="history-import")return importHistory(db,data);
+  if(path==="history-stats")return historyPage(db,data);
   if(path==="list"){
     const [players,teams,pools,surveys]=await Promise.all([all(db,"SELECT id,name,contact,route,team_id FROM entrants ORDER BY created_at,id"),all(db,"SELECT t.id,t.name,t.windows,t.roster_categories,t.extras,t.members_confirmed,pt.pool_id FROM teams t LEFT JOIN pool_teams pt ON pt.team_id=t.id ORDER BY t.id"),all(db,"SELECT p.id,p.rounds,pt.team_id,pt.position FROM pools p JOIN pool_teams pt ON p.id=pt.pool_id ORDER BY p.id,pt.position"),all(db,"SELECT answers FROM surveys ORDER BY updated_at")]);return {players,teams:teams.map(t=>({...t,windows:JSON.parse(t.windows),roster_categories:JSON.parse(t.roster_categories),extras:JSON.parse(t.extras)})),pools:pools.map(p=>({...p,rounds:JSON.parse(p.rounds)})),surveys:surveys.map(s=>JSON.parse(s.answers))};
   }
@@ -199,4 +239,3 @@ export default { async fetch(req,env){
    }
  }catch(e){return response({error:e instanceof Problem?e.message:"未能确认保存，请保留回执重试。"},e instanceof Problem?e.status:503);}
 }};
-

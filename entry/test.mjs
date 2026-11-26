@@ -18,7 +18,7 @@ function d1(raw){return {
 };}
 test("public forms, private receipts, organization and persistence",async t=>{
  const dir=await mkdtemp(path.join(tmpdir(),"zs-entry-test-")),file=path.join(dir,"entry.sqlite");
- let raw=new DatabaseSync(file);raw.exec("PRAGMA foreign_keys=ON");raw.exec(await readFile(new URL("drizzle/0000_entry.sql",import.meta.url),"utf8"));
+ let raw=new DatabaseSync(file);raw.exec("PRAGMA foreign_keys=ON");for(const f of ["0000_entry.sql","0001_history.sql"])raw.exec(await readFile(new URL("drizzle/"+f,import.meta.url),"utf8"));
  t.after(async()=>{raw.close();await rm(dir,{recursive:true,force:true});});
  const adminKey=key(),env={DB:d1(raw),OPS_ADMIN_TOKEN:adminKey,OPS_OWNER_EMAIL:"owner@example.test"};
  async function api(endpoint,bearer,payload={},expected=200,extra={}){const headers={"Content-Type":"application/json",Origin:origin,...extra};if(bearer)headers.Authorization="Bearer "+bearer;
@@ -80,6 +80,20 @@ test("public forms, private receipts, organization and persistence",async t=>{
   const made=await api("/api/admin/assign",adminKey,{players:ids,name:"散人队"});assert.ok(made.id);const cap=await api("/api/me",keys[0]);assert.ok(cap.captain&&cap.joinCode);
   const player=await api("/api/me",keys[1]);assert.equal(player.team,"散人队");assert.equal(player.captain,false);
   await api("/api/admin/assign",adminKey,{players:ids,name:"又组队"},409);
+ });
+ await t.test("historical evidence is private, retry-safe, and isolated from registrations",async()=>{
+   const rec={source_key:"nick-0000000000000001",nickname:"合成档案甲",sources:[{source_id:"SRC-XLS",source_cell:"对抗六维!A2"},{source_id:"SRC-ALIAS",source_cell:"别名复核!A6:B6"}]};
+   const before=await api("/api/admin/list",adminKey);
+   await api("/api/admin/history-import",null,{records:[rec]},403);
+   await api("/api/admin/history-stats",key(),{},403);
+   await api("/api/admin/history-import",adminKey,{records:[{...rec,school:"unwanted"}]},400);
+   await api("/api/admin/history-import",adminKey,{records:[rec]});await api("/api/admin/history-import",adminKey,{records:[rec]});
+   const another={...rec,source_key:"nick-0000000000000002",nickname:"合成档案乙"};
+   await api("/api/admin/history-import",adminKey,{records:[another,{...rec,nickname:"冲突"}]},409);
+   const first=await api("/api/admin/history-stats",adminKey,{limit:1});assert.equal(first.count,1);assert.equal(first.evidence,2);assert.deepEqual(first.items[0].sources.map(s=>s.source_id),["SRC-ALIAS","SRC-XLS"]);assert.equal(first.identity,"unverified");
+   await api("/api/admin/history-import",adminKey,{records:[another]});const paged=await api("/api/admin/history-stats",adminKey,{limit:1});assert.equal(paged.next,rec.source_key);
+   assert.equal((await api("/api/admin/history-stats",adminKey,{after:paged.next})).items[0].source_key,another.source_key);
+   const after=await api("/api/admin/list",adminKey);assert.equal(before.players.length,after.players.length);assert.ok(!JSON.stringify(after).includes(rec.nickname));
  });
  await t.test("test captain and survey can be removed without residue",async()=>{
   const tester=key();const p=await api("/api/enroll",tester,{name:"QA",contact:"test",route:"captain",teamName:"QA removal"});await api("/api/availability",tester,{confirmed:true,windows:common});await api("/api/withdraw",tester);

@@ -2,7 +2,7 @@ import http from "node:http";
 import {DatabaseSync} from "node:sqlite";
 import {readFile} from "node:fs/promises";
 import worker from "./dist/server/index.js";
-const db=new DatabaseSync(":memory:");db.exec("PRAGMA foreign_keys=ON");db.exec(await readFile(new URL("./drizzle/0000_entry.sql",import.meta.url),"utf8"));
+const db=new DatabaseSync(":memory:");db.exec("PRAGMA foreign_keys=ON");for(const f of ["0000_entry.sql","0001_history.sql"])db.exec(await readFile(new URL("./drizzle/"+f,import.meta.url),"utf8"));
 const binding={prepare(sql){return {bind(...args){return {
  async first(){return db.prepare(sql).get(...args)||null;},
  async all(){return {results:db.prepare(sql).all(...args)};},
