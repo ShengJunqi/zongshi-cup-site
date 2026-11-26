@@ -51,6 +51,22 @@ test("public forms, private receipts, organization and persistence",async t=>{
   let list=await api("/api/admin/list",adminKey);assert.equal(list.surveys.length,1);assert.equal(list.surveys[0].note,"你好");assert.ok(!("name" in list.surveys[0]));
   await api("/api/survey/withdraw",survey);list=await api("/api/admin/list",adminKey);assert.equal(list.surveys.length,0);
  });
+ await t.test("optional channel and schedule answers coexist with unchanged legacy answers",async()=>{
+  const oldKey=key(),newKey=key();
+  await api("/api/survey",oldKey,{mode:"solo",channel:"",hardestStage:""});
+  await api("/api/survey",newKey,{channel:"student-club",hardestStage:"groups"});
+  await api("/api/survey",newKey,{channel:"not-listed"},400);
+  await api("/api/survey",newKey,{hardestStage:"not-listed"},400);
+  const {surveys}=await api("/api/admin/list",adminKey);
+  assert.deepEqual(surveys.find(s=>s.mode==="solo"),{mode:"solo"});
+  assert.deepEqual(surveys.find(s=>s.channel==="student-club"),{channel:"student-club",hardestStage:"groups"});
+  const html=await (await worker.fetch(new Request(origin),env)).text();
+  for(const field of ["channel","hardestStage"]){
+   assert.ok(html.includes('<select name="'+field+'">'));
+  }
+  await api("/api/survey/withdraw",oldKey);
+  await api("/api/survey/withdraw",newKey);
+ });
  const teams=[captain];const teamKeys=[a];const common=[{date:"2026-12-19",start:600,end:780},{date:"2026-12-20",start:600,end:900}];
  await t.test("confirmed windows saved only by captain and after a process restart",async()=>{
   await api("/api/availability",member,{confirmed:true,windows:common},403);await api("/api/availability",a,{confirmed:false,windows:common},400);

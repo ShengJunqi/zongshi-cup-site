@@ -17,7 +17,15 @@ async function load(){const d=await api("list");state=d;proposal=null;get("data"
  d.teams.forEach(t=>line("teams",t.name+" · "+t.roster_categories.map(k=>tags[k]).join("、")+" · "+(t.windows.map(label).join(" / ")||"未报空档")+(t.pool_id?" · 已分组":""),t.members_confirmed&&!t.pool_id?t.id:null));
  const groups=new Map();for(const row of d.pools){if(!groups.has(row.id))groups.set(row.id,[]);groups.get(row.id).push(row);}
  for(const [,rs] of groups){const sorted=rs.sort((a,b)=>a.position-b.position),names=sorted.map(r=>team(r.team_id)),pairs=[[[0,3],[1,2]],[[0,2],[1,3]],[[0,1],[2,3]]];sorted[0].rounds.forEach((r,i)=>line("pools",label(r)+" · "+pairs[i].map(([a,b])=>names[a]+" 对 "+names[b]).join(" / ")));}
- d.surveys.forEach(s=>line("surveys",Object.values(s).join(" · ")));get("status").textContent="已读取 "+d.players.length+" 条报名、"+d.teams.length+" 队和 "+d.surveys.length+" 份调研。";
+ const channels={bilibili:"B站视频","student-club":"学生社团",friends:"朋友或队友","prior-event":"上届赛事",other:"其他"};
+ const stages={practice:"12 月 17–18 日训练赛",groups:"12 月 19–27 日小组赛",playoffs:"1 月 1–3 日季后赛","all-possible":"都可能参加",unsure:"暂不确定"};
+ for(const {channel,hardestStage,...other} of d.surveys){
+  const answers=Object.values(other);
+  if(channel) answers.push("来源："+(channels[channel]||channel));
+  if(hardestStage) answers.push("候选赛段："+(stages[hardestStage]||hardestStage));
+  line("surveys",answers.join(" · "));
+ }
+ get("status").textContent="已读取 "+d.players.length+" 条报名、"+d.teams.length+" 队和 "+d.surveys.length+" 份调研。";
 }
 const action=(id,fn)=>get(id).onclick=async e=>{e.target.disabled=true;try{await fn();}catch(err){get("status").textContent=err.message;}finally{e.target.disabled=false;}};
 action("load",load);

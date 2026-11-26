@@ -94,7 +94,14 @@ async function availability(db,h,data){
   const saved=await stmt(db,"UPDATE teams SET windows=?,roster_categories=?,extras=?,members_confirmed=1,updated_at=CURRENT_TIMESTAMP WHERE id=? AND captain=? AND NOT EXISTS(SELECT 1 FROM pool_teams WHERE team_id=teams.id)",JSON.stringify(windows),JSON.stringify([...new Set(categories)]),JSON.stringify(extras),me.teamId,h).run();
   check(saved.meta.changes===1,409,"本组时段已被锁定，请重新核对。");return {windows};
 }
-const surveyOptions={affiliation:["intl-high","domestic-uni","overseas","exchange","other"],motivation:["competition","friends","exchange","practice","watch","other"],obstacle:["timing","team","latency","mismatch","exams","none","other"],mode:["solo","team","both","watch"]};
+const surveyOptions={
+ affiliation:["intl-high","domestic-uni","overseas","exchange","other"],
+ motivation:["competition","friends","exchange","practice","watch","other"],
+ obstacle:["timing","team","latency","mismatch","exams","none","other"],
+ mode:["solo","team","both","watch"],
+ channel:["bilibili","student-club","friends","prior-event","other"],
+ hardestStage:["practice","groups","playoffs","all-possible","unsure"]
+};
 function surveyAnswers(d){
  const result={};
  for(const [key,opts] of Object.entries(surveyOptions)){

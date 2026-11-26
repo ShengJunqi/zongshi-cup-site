@@ -12,7 +12,18 @@
 <form id="survey-form"><label>你目前在哪类学校或项目？<select name="affiliation"><option value="">可跳过</option><option value="intl-high">国际高中／国际课程</option><option value="domestic-uni">国内大学</option><option value="overseas">海外大学／留学</option><option value="exchange">交换项目</option><option value="other">其他</option></select></label>
 <label>你最想从这场比赛得到什么？<select name="motivation"><option value="">可跳过</option><option value="competition">认真比一场</option><option value="friends">认识一起玩的人</option><option value="exchange">认识有交换或留学计划的同学</option><option value="practice">练阵容和配合</option><option value="watch">主要想看直播或回放</option><option value="other">其他</option></select></label>
 <label>最可能让你打不了的原因？<select name="obstacle"><option value="">可跳过</option><option value="timing">时间凑不齐</option><option value="team">组不到队</option><option value="exams">期末或行程</option><option value="latency">网络或延迟</option><option value="mismatch">队伍实力落差</option><option value="none">暂时没有</option><option value="other">其他</option></select></label>
-<label>你倾向怎样参加？<select name="mode"><option value="">可跳过</option><option value="solo">个人找队</option><option value="team">整队报名</option><option value="both">两种都行</option><option value="watch">只观赛</option></select></label><label>还有什么想告诉赛务的？<textarea name="note" maxlength="240" rows="3" placeholder="可跳过，请勿写姓名或联系方式"></textarea></label><button>提交调研</button></form><div id="survey-result" role="status" aria-live="polite"></div>
+<label>你倾向怎样参加？<select name="mode"><option value="">可跳过</option><option value="solo">个人找队</option><option value="team">整队报名</option><option value="both">两种都行</option><option value="watch">只观赛</option></select></label>
+<label>你从哪里看到宗师杯？
+  <select name="channel">
+    <option value="">可跳过</option><option value="bilibili">B站视频</option><option value="student-club">学生社团</option><option value="friends">朋友或队友</option><option value="prior-event">上届赛事</option><option value="other">其他</option>
+  </select>
+</label>
+<label>哪个候选阶段你最可能赶不上？（北京时间）
+  <select name="hardestStage">
+    <option value="">可跳过</option><option value="practice">12 月 17–18 日训练赛</option><option value="groups">12 月 19–27 日小组赛</option><option value="playoffs">1 月 1–3 日季后赛</option><option value="all-possible">都可能参加</option><option value="unsure">暂不确定</option>
+  </select>
+</label>
+<label>还有什么想告诉赛务的？<textarea name="note" maxlength="240" rows="3" placeholder="可跳过，请勿写姓名或联系方式"></textarea></label><button>提交调研</button></form><div id="survey-result" role="status" aria-live="polite"></div>
 <details><summary>有调研回执？撤回这份答卷</summary><form id="survey-withdraw"><label>私人调研回执<input name="key" minlength="48" maxlength="48" required autocomplete="off"></label><button class="danger">撤回调研</button></form></details></section>
 <section id="availability" class="panel" hidden><h1>队伍可打时段</h1><p>统一使用北京时间。队长把同场五个人都能到齐的连续时段填在这里；可以跨天分开填。赛务按四队交集安排对阵。</p>
 <form id="team-lookup"><label>队长的私人报名回执<input name="key" minlength="48" maxlength="48" required autocomplete="off"></label><button>打开队伍时段</button></form><div id="time-result" role="status" aria-live="polite"></div>
