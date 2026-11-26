@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>视频与名场面 · 宗师杯</title>
+<meta name="description" content="宗师杯视频与名场面页：现有剪辑 2 支、待授权候选 1 支；封面、时间码、授权未确认的字段均标待补/待授权"/>
+<meta property="og:title" content="视频与名场面 · 宗师杯"/>
+<meta property="og:description" content="宗师杯视频与名场面页：现有剪辑 2 支、待授权候选 1 支；封面、时间码、授权未确认的字段均标待补/待授权"/>
+<meta property="og:type" content="website"/>
+<link rel="stylesheet" href="assets/theme.css"/>
+<style>
+/* 本页局部样式：只服务 videos.html，不改 theme.css */
+.vid-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;align-items:start}
+.vid{display:flex;flex-direction:column;min-width:0}
+.vcover{position:relative;aspect-ratio:16/9;border:1px dashed var(--line);border-radius:10px;background:linear-gradient(140deg,rgba(232,168,50,.10),rgba(14,19,32,.9));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;padding:12px;margin-bottom:12px}
+.vcover b{font-size:16px;color:var(--gold2);letter-spacing:.5px}
+.vsub{font-size:12.5px;color:var(--muted)}
+.vdur{position:absolute;right:8px;bottom:8px;font-family:Consolas,ui-monospace,monospace;font-size:12.5px;font-weight:700;color:#151007;background:var(--gold2);border-radius:6px;padding:1px 7px}
+.vmeta{display:grid;grid-template-columns:auto minmax(0,1fr);gap:5px 12px;margin:0;font-size:14px;line-height:1.65}
+.vmeta dt{color:var(--muted);white-space:nowrap}
+.vmeta dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.need{color:var(--warn);font-weight:600}
+details.vmore{margin-top:12px}
+details.vmore ul{margin:8px 0 0;padding-left:18px;font-size:14px;line-height:1.8;color:#c9cfdb}
+details.vmore li{margin:2px 0;overflow-wrap:anywhere}
+.vcard-h{margin:0 0 10px}
+.vcard-h h3{margin:0 0 6px}
+.vfoot{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.vhint{font-size:13px;color:var(--muted)}
+@media(max-width:760px){.vid-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+  <a class="brand" href="index.html"><div class="seal">宗</div><div><b>宗师杯</b><span>学生自己组的擂台 · 数据可追溯</span></div></a>
+  <nav class="nav"><a class="" href="index.html">首页</a><a class="" href="event.html">赛事</a><a class="" href="schedule.html">赛程</a><a class="" href="players/fangshan-de-qiu.html">选手</a></nav>
+</div></header>
+<main class="wrap">
+
+<div class="breadcrumb"><a href="index.html">首页</a> / 视频与名场面</div>
+
+<section class="hero" style="padding-top:18px">
+  <div class="eyebrow">视频与名场面 · 二级入口</div>
+  <h1>先把素材登记清楚，再谈名场面。</h1>
+  <p class="lead">本页是一张独立的「视频/名场面」页样板，供主站后续集成。只登记已确认的素材信息（片名、文件名、时长、对应比赛）；封面、分辨率、时间码、授权等未确认的字段一律写「待补 / 待授权」。授权确认前，本页不嵌入任何视频。</p>
+  <div class="badges"><span class="badge gold">现有素材 2 支</span><span class="badge warn">全部未授权嵌入</span><span class="badge">不编造 BV 号 / 日期 / 奖金</span><span class="badge">独立样板页 · 未入主导航</span></div>
+</section>
+
+<section class="section">
+  <div class="section-head"><h2>现有素材 · 2 支</h2><span class="badge warn">授权状态：待确认</span></div>
+  <p class="small">两支都与「赏金赛第一把」相关，音频为原创音乐 + 字幕，不是现场音。素材性质是复盘与片头样片，不是对外宣传物料。</p>
+  <div class="vid-grid">
+
+    <article class="card vid">
+      <div class="vcover"><b>四分钟复盘</b><span class="vsub">封面待补 · 16:9</span><span class="vdur">57.6s</span></div>
+      <div class="vcard-h">
+        <h3>四分钟复盘</h3>
+        <div class="badges" style="margin:0"><span class="status confirmed">时长已确认</span><span class="status pending">授权待确认</span><span class="badge">未嵌入</span></div>
+      </div>
+      <dl class="vmeta">
+        <dt>文件名</dt><dd>四分钟复盘_v01.mp4</dd>
+        <dt>时长</dt><dd>57.6s（ffprobe 实测）</dd>
+        <dt>对应比赛</dt><dd>赏金赛第一把（S2，<a href="matches/s2-first.html">战报</a>）</dd>
+        <dt>内容</dt><dd>比赛复盘剪辑</dd>
+        <dt>音频</dt><dd>原创音乐 + 字幕（非现场音）</dd>
+        <dt>封面</dt><dd><span class="need">待补</span></dd>
+        <dt>授权</dt><dd><span class="need">待授权</span></dd>
+      </dl>
+      <details class="vmore">
+        <summary>待补字段（8 项）</summary>
+        <ul>
+          <li><span class="need">clip_id</span>：未分配，V2 清单未交付</li>
+          <li><span class="need">分辨率 / 尺寸</span>：现只实测时长，无尺寸记录</li>
+          <li><span class="need">片内时间码范围</span>：覆盖游戏内哪一段，未登记</li>
+          <li><span class="need">对应选手 / 英雄</span>：未登记</li>
+          <li><span class="need">封面图</span>：16:9，未出图</li>
+          <li><span class="need">B 站链接 / BV 号</span>：无，本页不编造</li>
+          <li><span class="need">授权备注</span>：音乐、画面、选手同意（V3）</li>
+          <li><span class="need">命名规范</span>：现行文件名不符 V4 规范「赛事_对局_时间_主题_版本.mp4」</li>
+        </ul>
+      </details>
+    </article>
+
+    <article class="card vid">
+      <div class="vcover"><b>开头样片</b><span class="vsub">封面待补 · 16:9</span><span class="vdur">57.0s</span></div>
+      <div class="vcard-h">
+        <h3>开头样片</h3>
+        <div class="badges" style="margin:0"><span class="status confirmed">时长已确认</span><span class="status pending">授权待确认</span><span class="badge">未嵌入</span></div>
+      </div>
+      <dl class="vmeta">
+        <dt>文件名</dt><dd>开头样片_v02.mp4（版次 v02）</dd>
+        <dt>时长</dt><dd>57.0s（ffprobe 实测）</dd>
+        <dt>对应比赛</dt><dd>赏金赛第一把（S2，<a href="matches/s2-first.html">战报</a>）</dd>
+        <dt>内容</dt><dd>片头样片</dd>
+        <dt>音频</dt><dd>原创音乐 + 字幕（非现场音）</dd>
+        <dt>封面</dt><dd><span class="need">待补</span></dd>
+        <dt>授权</dt><dd><span class="need">待授权</span></dd>
+      </dl>
+      <details class="vmore">
+        <summary>待补字段（8 项）</summary>
+        <ul>
+          <li><span class="need">clip_id</span>：未分配，V2 清单未交付</li>
+          <li><span class="need">分辨率 / 尺寸</span>：现只实测时长，无尺寸记录</li>
+          <li><span class="need">片内时间码范围</span>：是纯片头还是含对局画面，未登记</li>
+          <li><span class="need">对应选手 / 英雄</span>：未登记</li>
+          <li><span class="need">封面图</span>：16:9，未出图</li>
+          <li><span class="need">B 站链接 / BV 号</span>：无，本页不编造</li>
+          <li><span class="need">授权备注</span>：音乐、画面、选手同意（V3）</li>
+          <li><span class="need">命名规范</span>：现行文件名不符 V4 规范「赛事_对局_时间_主题_版本.mp4」</li>
+        </ul>
+      </details>
+    </article>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><h2>待授权候选 · 1 支</h2><span class="badge">不计入现有素材</span></div>
+  <p class="small">2026-11-01 视频会话交付的宣传片 v01。交付记录写「可公开」，但主办方与参赛者的授权尚未确认，因此先登记为候选，不进「现有素材」，也不上首页。</p>
+  <div class="vid-grid">
+
+    <article class="card vid">
+      <div class="vcover"><b>宣传片 v01</b><span class="vsub">封面已有本地版，未入站</span><span class="vdur">1:58</span></div>
+      <div class="vcard-h">
+        <h3>宗师杯 · 宣传片 v01</h3>
+        <div class="badges" style="margin:0"><span class="status pending">待 Jason 确认</span><span class="badge">未入站</span><span class="badge">未嵌入</span></div>
+      </div>
+      <dl class="vmeta">
+        <dt>文件名</dt><dd>宗师杯_宣传片_v01.mp4</dd>
+        <dt>时长</dt><dd>1:58（交付记录；待 ffprobe 复核）</dd>
+        <dt>规格</dt><dd>1080p 原片约 56 MB；另有 720p web 版（1280×720，约 14.5 MB）与封面图，均未进站</dd>
+        <dt>交付</dt><dd>2026-11-01（视频会话）</dd>
+        <dt>用途</dt><dd>候选：首页 / 本页</dd>
+        <dt>授权</dt><dd><span class="need">待确认</span>（公开前仍需补齐 V3）</dd>
+      </dl>
+      <details class="vmore">
+        <summary>待补字段（5 项）</summary>
+        <ul>
+          <li><span class="need">授权范围</span>：原片 / web 版 / 封面分别授权，不能只授其一</li>
+          <li><span class="need">入站方式</span>：56 MB 原片不进仓库；压 web 版或放 B 站后只留链接</li>
+          <li><span class="need">画面清单</span>：用到哪些比赛画面、哪些选手，需逐段登记</li>
+          <li><span class="need">音乐授权</span>：配乐来源与授权状态</li>
+          <li><span class="need">命名规范</span>：交付文件名不符 V4 规范</li>
+        </ul>
+      </details>
+    </article>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><h2>名场面切片 · 卡位（待补）</h2><span class="badge warn">素材未到</span></div>
+  <p class="small">名场面清单（V2）尚未交付。卡位先留结构：每个切片需要 clip_id、对应比赛、选手昵称、英雄、游戏内起止时间码、横/竖、时长、封面、授权。授权与时间码确认前，不写具体「名场面」事件，避免把推测写成事实。</p>
+  <div class="vid-grid">
+    <article class="card tight vid"><h3>卡位 01 · 名场面切片</h3><p class="small">素材未到（V2）。字段：clip_id / 比赛 / 选手 / 英雄 / 起止时间码 / 横竖 / 时长 / 封面 / 授权。</p><div class="vfoot"><span class="badge warn">待授权</span><span class="badge">未嵌入</span></div></article>
+    <article class="card tight vid"><h3>卡位 02 · 名场面切片</h3><p class="small">同上。同一选手或同一场比赛的多段切片，需各自的 clip_id 与时间码，不能共用一个。</p><div class="vfoot"><span class="badge warn">待授权</span><span class="badge">未嵌入</span></div></article>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><h2>缺什么 · 待补清单</h2><span class="badge">9 项</span></div>
+  <div class="table-wrap"><table>
+    <tr><th>待补项</th><th>现状</th><th>补齐方</th></tr>
+    <tr><td>封面图</td><td>三支均无站内可用封面；宣传片有本地封面但未入站</td><td>视频会话</td></tr>
+    <tr><td>分辨率 / 尺寸</td><td>只有实测时长，没有尺寸记录</td><td>视频会话 + ffprobe 复核</td></tr>
+    <tr><td>游戏内时间码 / 对应事件</td><td><span class="need">待补</span>，决定切片能否被引用</td><td>视频会话 + 事实侧</td></tr>
+    <tr><td>对应选手 / 英雄</td><td><span class="need">待补</span></td><td>视频会话 + 事实侧</td></tr>
+    <tr><td>授权（音乐 / 画面 / 选手同意）</td><td>全部<span class="need">待授权</span>，V3 未补齐</td><td>Jason + 参赛选手</td></tr>
+    <tr><td>发布状态（可公开 / 内部）</td><td>统一按「内部素材」处理</td><td>Jason</td></tr>
+    <tr><td>B 站链接 / BV 号</td><td><span class="need">待补</span>；本页不编造</td><td>运营</td></tr>
+    <tr><td>命名规范</td><td>现行文件名不符合 V4 规范</td><td>视频会话</td></tr>
+    <tr><td>历史 VOD 索引</td><td>待建；频道归属、BV 号、比分与对阵需人工核对</td><td>运营 + 事实侧</td></tr>
+  </table></div>
+  <p class="scroll-hint">← 左右滑动查看完整表格 →</p>
+</section>
+
+<section class="section">
+  <div class="section-head"><h2>来源与边界</h2><a class="small" href="sources.html">来源与核对总表 →</a></div>
+  <div class="note">
+    · <b>时长</b>：ffprobe 实测——四分钟复盘 57.6s、开头样片 57.0s（A 级来源，逐数字可追）。<br/>
+    · <b>对应比赛</b>：赏金赛第一把，比分与结算口径见 <a href="sources.html#src_settle_919">结算面板来源</a>；比赛日期未确认，本页不写日期。<br/>
+    · <b>素材性质与授权规则</b>：2026-11-01 素材盘点 + 外部对接需求 V1/V2/V3；公开前必须补齐发布状态与授权说明。<br/>
+    · <b>页面定位</b>：视频属于二级入口，不占主导航；本页暂未接入首页链接。
+  </div>
+  <div class="notice">
+    <b>边界（写死在本页）</b>
+    <ul class="small" style="margin:8px 0 0;padding-left:18px">
+      <li>只登记本站自己的素材。<b>参考 / 学习用的清酒视频不属于本站内容</b>：不入库、不展示、不作为页面素材，也不出现在任何卡位。</li>
+      <li>S2 场次不对外宣传：相关素材统一按「内部」处理。本页不写报名入口、不写公开赛程，也不把它包成宣传物料。</li>
+      <li>历史 VOD 只做索引计划：频道归属、BV 号、比分与对阵均待人工核对，本轮不列、不嵌入，也不编造 BV 号。</li>
+      <li>不写奖金金额与比赛日期；未确认的一律写「待补 / 待授权」。</li>
+      <li>不暴露本机绝对路径；大文件不进仓库，页面只放元数据与（将来的）站内封面。</li>
+    </ul>
+  </div>
+  <p class="small" style="margin-top:12px">相关页面：<a href="matches/s2-first.html">赏金赛第一把战报</a> · <a href="sources.html">来源与核对</a> · <a href="event.html">赛事</a> · <a href="index.html">首页</a></p>
+</section>
+
+<footer class="footer">
+  宗师杯 · 学生自行组织的王者荣耀国际服赛事（非校队）｜本页为 M1 样板，不是正式赛事公告。<br/>
+  数据来源见 <a href="sources.html">来源与核对</a>；只公开游戏昵称与游戏数据，不公开真实姓名/学校。
+  发现错误或希望隐藏数据，请联系 Jason（由运营人工处理）。<br/>
+  本页由 Jason 的 AI 小助手（DeepSeek）生成 · 未确认信息标「待核实 / 待公布」。
+</footer>
+</main>
+<nav class="mobile-nav"><a class="" href="index.html">首页</a><a class="" href="event.html">赛事</a><a class="" href="schedule.html">赛程</a><a class="" href="players/fangshan-de-qiu.html">选手</a></nav>
+</body>
+</html>
