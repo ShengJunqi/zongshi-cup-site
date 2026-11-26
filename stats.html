@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>赏金赛第一把 · 单场数据｜宗师杯</title>
+<meta name="description" content="赏金赛第一把单场数据：3:17、最后可见时钟 06:03、双方十人结算数据、经济与伤害合计、关键节点、来源与待核实字段。"/>
+<style>
+:root{--bg:#0a0d14;--panel:#121826;--panel2:#0e1320;--gold:#e8a832;--gold2:#f6cf7a;--text:#eef1f6;--muted:#aab1c2;--line:#263044;--ok:#7fd6a0;--warn:#f2b95c;--danger:#ff8f80;--blue:#6fa8ff;--red:#ff8f80}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(120% 55% at 50% 0%,#231d10 0%,#0a0d14 58%) no-repeat,var(--bg);color:var(--text);font-family:"Noto Sans SC","Microsoft YaHei","PingFang SC",system-ui,sans-serif;font-size:15.5px;line-height:1.7;-webkit-text-size-adjust:100%}
+a{color:var(--gold2);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px 64px}
+.top{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.seal{width:38px;height:38px;flex:none;border:2px solid var(--gold);border-radius:8px;display:grid;place-items:center;font:700 18px/1 "STKaiti","KaiTi",serif;color:var(--gold)}
+.top b{font-size:17px;letter-spacing:2px;display:block;line-height:1.15}
+.top span{display:block;font-size:12px;color:var(--muted);letter-spacing:.4px}
+.top-a{margin-left:auto;font-size:13px;color:var(--muted)}
+.hero{padding:26px 0 6px}
+.eyebrow{font-size:12.5px;letter-spacing:3px;color:var(--gold)}
+h1{font-size:clamp(26px,6.4vw,40px);margin:6px 0 8px;letter-spacing:1px;line-height:1.25}
+h2{font-size:20px;margin:0 0 10px}
+h3{font-size:16px;margin:18px 0 6px;color:var(--gold2)}
+.muted{color:var(--muted)}
+.small{font-size:13.5px;color:#b9c0cf;line-height:1.75}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.badge{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12.5px;color:var(--muted);white-space:nowrap}
+.badge.gold{color:var(--gold);border-color:rgba(232,168,50,.42);background:rgba(232,168,50,.08)}
+.badge.warn{color:var(--warn);border-color:rgba(242,185,92,.38);background:rgba(242,185,92,.08)}
+.badge.ok{color:var(--ok);border-color:rgba(127,214,160,.35);background:rgba(127,214,160,.08)}
+.score-label{font-size:12.5px;color:var(--gold);letter-spacing:2px;margin-top:16px}
+.score{font-family:Consolas,ui-monospace,monospace;font-size:clamp(38px,10vw,58px);letter-spacing:2px;line-height:1.05;margin:2px 0 6px}
+.score em{font-style:normal;font-size:.42em;letter-spacing:0;font-family:inherit;color:var(--muted);margin:0 5px;vertical-align:middle}
+.score .lose{color:var(--danger)}
+.section{margin-top:32px}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.section-head h2{margin:0;border-left:4px solid var(--gold);padding-left:10px}
+.card{background:linear-gradient(165deg,rgba(20,26,38,.96),rgba(13,18,28,.96));border:1px solid var(--line);border-radius:14px;padding:16px}
+.card+.card{margin-top:12px}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:10px;margin-top:14px}
+.kv .item{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.kv .item span{display:block;font-size:12px;color:var(--muted)}
+.kv .item b{font-size:17px;font-family:Consolas,monospace;color:var(--gold2)}
+.kv .item b.b{color:var(--blue)}
+.kv .item b.r{color:var(--red)}
+.table-wrap{margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--gold);font-weight:600;font-size:12.5px;background:rgba(232,168,50,.05);white-space:nowrap}
+tfoot td{color:var(--gold2);font-weight:600;border-top:2px solid var(--line);border-bottom:none;white-space:nowrap}
+.num{font-family:Consolas,ui-monospace,monospace;white-space:nowrap}
+.hi{color:var(--ok)}
+.cand{border-bottom:1px dotted rgba(242,185,92,.75);cursor:help}
+.tname{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 8px}
+.tname b{font-size:17px;letter-spacing:1px}
+.tname .side{font-size:12px;color:var(--muted)}
+.tblue b{color:var(--blue)}
+.tred b{color:var(--red)}
+.status{display:inline-block;font-size:11.5px;border-radius:999px;padding:1px 8px;margin-left:6px;white-space:nowrap;border:1px solid var(--line)}
+.status.pending{color:var(--warn);border-color:rgba(242,185,92,.4);background:rgba(242,185,92,.08)}
+.status.confirmed{color:var(--ok);border-color:rgba(127,214,160,.35);background:rgba(127,214,160,.08)}
+.note{background:rgba(232,168,50,.06);border-left:3px solid var(--gold);border-radius:8px;padding:12px 14px;font-size:13.5px;color:#dde1e9;margin:12px 0}
+.metric+.metric{margin-top:16px}
+.metric-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.metric-h b{font-size:15px;letter-spacing:.5px}
+.metric-h span{font-size:12.5px;color:var(--muted);font-family:Consolas,monospace}
+.bar-row{display:flex;align-items:center;gap:8px;margin:4px 0}
+.bar-l{width:18px;flex:none;font-size:12px;color:var(--muted)}
+.bar{flex:1;height:12px;background:var(--panel2);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px}
+.bar i.blue{background:linear-gradient(90deg,rgba(111,168,255,.45),rgba(111,168,255,.95))}
+.bar i.red{background:linear-gradient(90deg,rgba(255,143,128,.45),rgba(255,143,128,.95))}
+.bar-v{width:66px;flex:none;text-align:right;font-family:Consolas,monospace;font-size:12.5px;color:#d7dbe4}
+.timeline{list-style:none;margin:4px 0 0;padding:0}
+.timeline li{display:flex;gap:12px;padding:8px 0;border-top:1px dashed var(--line);font-size:14px}
+.timeline li:first-child{border-top:none}
+.timeline time{font-family:Consolas,monospace;color:var(--gold2);min-width:74px;flex:none;font-size:13.5px}
+.timeline .t-d{flex:1;min-width:0}
+.timeline .small{display:block}
+.footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:var(--muted);line-height:1.9}
+.footer a{color:var(--muted)}
+@media(max-width:760px){
+  .wrap{padding:0 14px 48px}
+  .top-a{display:none}
+  .card{padding:13px 12px}
+  .section{margin-top:26px}
+  .table-wrap{margin:0 -2px}
+  table{font-size:13.5px}
+  /* 玩家表 → 每人一张卡：第 1 行 英雄 / 昵称 / 分路，第 2-3 行 3×2 指标 */
+  table.pt thead{display:none}
+  table.pt,table.pt tbody,table.pt tfoot{display:block}
+  table.pt tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:10px;
+    border:1px solid var(--line);border-radius:12px;background:var(--panel2);padding:9px 12px 11px;margin:9px 0}
+  table.pt td{border:0;padding:0;min-width:0;display:block}
+  table.pt td.hero{grid-column:1;grid-row:1;font-weight:700;color:var(--gold2);font-size:15px;white-space:nowrap}
+  table.pt td.hero::after{content:"·";color:var(--muted);margin-left:6px;font-weight:400}
+  table.pt td.name{grid-column:2;grid-row:1;font-size:14.5px;line-height:1.4;overflow-wrap:anywhere}
+  table.pt td.role{grid-column:3;grid-row:1;justify-self:end;font-size:12px;color:var(--warn)}
+  table.pt td.num{display:flex;flex-direction:column;margin-top:8px;font-size:14px}
+  table.pt td.num::before{content:attr(data-l);order:-1;font-size:11px;color:var(--muted);letter-spacing:.4px;line-height:1.6}
+  table.pt tfoot tr{background:rgba(232,168,50,.07);border-color:rgba(232,168,50,.4)}
+  table.pt tfoot td.hero::after{content:"";display:none}
+  table.pt tfoot td.name,table.pt tfoot td.role{color:var(--gold2);font-weight:600}
+  /* 来源 / 待核实 表 → 分块 */
+  table.src-t thead{display:none}
+  table.src-t,table.src-t tbody{display:block}
+  table.src-t tr{display:block;position:relative;border:1px solid var(--line);border-radius:10px;background:var(--panel2);padding:8px 11px 10px;margin:8px 0}
+  table.src-t td{display:block;border:0;padding:2px 0;font-size:13px;line-height:1.65}
+  table.src-t td::before{display:block;font-size:11px;color:var(--muted);letter-spacing:.4px;margin-top:2px}
+  table.src-t td:first-child::before{margin-top:0}
+  table.src-src td:nth-child(1)::before{content:"字段"}
+  table.src-src td:nth-child(2)::before{content:"来源"}
+  table.src-src td:nth-child(3)::before{content:"状态"}
+  table.src-todo td:nth-child(1){position:absolute;top:8px;right:11px;color:var(--gold);font:12px/1.4 Consolas,monospace}
+  table.src-todo td:nth-child(1)::before{content:""}
+  table.src-todo td:nth-child(2)::before{content:"字段"}
+  table.src-todo td:nth-child(3)::before{content:"现状"}
+  table.src-todo td:nth-child(4)::before{content:"关闭条件"}
+  .timeline li{gap:8px}
+  .timeline time{min-width:66px;font-size:13px}
+}
+@media(max-width:360px){
+  table.pt tr{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bar-v{width:58px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="seal">宗</div>
+  <div><b>宗师杯</b><span>单场数据 · 独立页</span></div>
+  <a class="top-a" href="matches/s2-first.html">同场战报（M1 样板）→</a>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">单场数据</div>
+  <h1>赏金赛第一把</h1>
+  <p class="small muted">OSU 学生擂主队（蓝）vs 上届冠军队伍（红）· BO1 · 历史赛事</p>
+  <div class="badges">
+    <span class="badge">历史赛事 · 已结束</span>
+    <span class="badge warn">比赛日期待确认</span>
+    <span class="badge">单局击杀比分</span>
+    <span class="badge ok">结算面板已确认</span>
+  </div>
+
+  <div class="score-label">单局击杀数</div>
+  <div class="score">3<em>:</em><span class="lose">17</span></div>
+  <p class="small">蓝方 3 · 红方 17 ｜ 胜局 0 : 1 ｜ 最后可见时钟 <b>06:03</b>（基地爆炸演出在其后）｜ 结束方式：基地被摧毁</p>
+  <p class="small muted">「06:03」是最后一帧可见计时，不等于官方结算时长；时间码口径见下方「待核实」。</p>
+
+  <div class="kv">
+    <div class="item"><span>击杀</span><b><span class="b">3</span> : <span class="r">17</span></b></div>
+    <div class="item"><span>经济合计</span><b>15.0k : 22.2k</b></div>
+    <div class="item"><span>经济差</span><b class="r">−7.2k</b></div>
+    <div class="item"><span>输出伤害</span><b>89.3k : 142.9k</b></div>
+    <div class="item"><span>承受伤害</span><b>142.9k : 89.3k</b></div>
+    <div class="item"><span>最高参团</span><b>100%</b></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>双方五人数据</h2>
+    <span class="badge ok">结算面板 · 逐人已确认</span>
+  </div>
+
+  <div class="card">
+    <div class="tname tblue"><b>蓝方 · OSU 学生擂主队</b><span class="side">3 杀 / 17 死</span></div>
+    <div class="table-wrap">
+    <table class="pt">
+      <thead><tr><th>英雄</th><th>昵称</th><th>分路</th><th>评分</th><th>K/D/A</th><th>输出</th><th>承受</th><th>经济</th><th>参团</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="hero" data-l="英雄">狂铁</td><td class="name" data-l="昵称">SCG.班师</td><td class="role" data-l="分路"><span class="cand" title="分路为候选，待确认">对抗路</span></td>
+          <td class="num" data-l="评分">5.6</td><td class="num" data-l="K/D/A">0/4/1</td>
+          <td class="num" data-l="输出">21.0k</td><td class="num" data-l="承受">36.4k</td>
+          <td class="num" data-l="经济">3.3k</td><td class="num" data-l="参团">33%</td>
+        </tr>
+        <tr>
+          <td class="hero" data-l="英雄">铠</td><td class="name" data-l="昵称">放闪的秋</td><td class="role" data-l="分路"><span class="cand" title="分路为候选，待确认">打野</span></td>
+          <td class="num" data-l="评分">7.6</td><td class="num" data-l="K/D/A">3/3/0</td>
+          <td class="num" data-l="输出">20.2k</td><td class="num" data-l="承受">20.7k</td>
+          <td class="num" data-l="经济">3.3k</td><td class="num hi" data-l="参团">100%</td>
+        </tr>
+        <tr>
+          <td class="hero" data-l="英雄">沈梦溪</td><td class="name" data-l="昵称">程咬金都人彘</td><td class="role" data-l="分路"><span class="cand" title="分路为候选，待确认">中路</span></td>
+          <td class="num" data-l="评分">4.0</td><td class="num" data-l="K/D/A">0/4/0</td>
+          <td class="num" data-l="输出">19.2k</td><td class="num" data-l="承受">21.2k</td>
+          <td class="num" data-l="经济">2.8k</td><td class="num" data-l="参团">0%*</td>
+        </tr>
+        <tr>
+          <td class="hero" data-l="英雄">敖隐</td><td class="name" data-l="昵称">终是没狙中你</td><td class="role" data-l="分路"><span class="cand" title="分路为候选，待确认">发育路</span></td>
+          <td class="num" data-l="评分">4.1</td><td class="num" data-l="K/D/A">0/2/1</td>
+          <td class="num" data-l="输出">16.2k</td><td class="num" data-l="承受">22.5k</td>
+          <td class="num" data-l="经济">3.1k</td><td class="num" data-l="参团">33%</td>
+        </tr>
+        <tr>
+          <td class="hero" data-l="英雄">牛魔</td><td class="name" data-l="昵称">好好吃饭</td><td class="role" data-l="分路"><span class="cand" title="分路为候选，待确认">游走</span></td>
+          <td class="num" data-l="评分">4.4</td><td class="num" data-l="K/D/A">0/4/1</td>
+          <td class="num" data-l="输出">12.7k</td><td class="num" data-l="承受">42.1k</td>
+          <td class="num" data-l="经济">2.5k</td><td class="num" data-l="参团">33%</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="hero" data-l="合计">合计</td><td class="name" data-l="">5 人</td><td class="role" data-l=""></td>
+          <td class="num" data-l="评分">—</td><td class="num" data-l="K/D/A">3/17</td>
+          <td class="num" data-l="输出">89.3k</td><td class="num" data-l="承受">142.9k</td>
+          <td class="num" data-l="经济">15.0k</td><td class="num" data-l="参团"><span>39.8%<small class="muted">均</small></span></td>
+        </tr>
+      </tfoot>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="tname tred"><b>红方 · 上届冠军队伍</b><span class="side">17 杀 / 3 死</span></div>
+    <div class="table-wrap">
+    <table class="pt">
+      <thead><tr><th>英雄</th><th>昵称</th><th>分路</th><th>评分</th><th>K/D/A</th><th>输出</th><th>承受</th><th>经济</th><th>参团</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="hero" data-l="英雄">蒙恬</td><td class="name" data-l="昵称">霖的玩偶</td><td class="role" data-l="分路"><span class="cand" title="分路为候选，待确认">对抗路</span></td>
+          <td class="num" data-l="评分">6.8</td><td class="num" data-l="K/D/A">1/2/5</td>
+          <td class="num" data-l="输出">27.2k</td><td class="num" data-l="承受">23.5k</td>
+          <td class="num" data-l="经济">3.7k</td><td class="num" data-l="参团">35%</td>
+        </tr>
+        <tr>
+          <td class="hero" data-l="英雄">暃</td><td class="name" data-l="昵称">wsvgdcn</td><td class="role" data-l="分路"><span class="cand" title="分路为候选，待确认">打野</span></td>
+          <td class="num" data-l="评分">13.0</td><td class="num" data-l="K/D/A">8/0/6</td>
+          <td class="num hi" data-l="输出">39.3k</td><td class="num" data-l="承受">17.6k</td>
+          <td class="num" data-l="经济">5.4k</td><td class="num" data-l="参团">82%</td>
+        </tr>
+        <tr>
+          <td class="hero" data-l="英雄">沈梦溪</td><td class="name" data-l="昵称">赐我至纯至真 / 猫猫</td><td class="role" data-l="分路"><span class="cand" title="分路为候选，待确认">中路</span></td>
+          <td class="num" data-l="评分">10.8</td><td class="num" data-l="K/D/A">6/1/7</td>
+          <td class="num" data-l="输出">26.7k</td><td class="num" data-l="承受">12.8k</td>
+          <td class="num" data-l="经济">4.5k</td><td class="num" data-l="参团">76%</td>
+        </tr>
+        <tr>
+          <td class="hero" data-l="英雄">李信</td><td class="name" data-l="昵称">Egoistical</td><td class="role" data-l="分路"><span class="cand" title="分路为候选，待确认">发育路</span></td>
+          <td class="num" data-l="评分">10.5</td><td class="num" data-l="K/D/A">2/0/9</td>
+          <td class="num" data-l="输出">31.5k</td><td class="num" data-l="承受">18.9k</td>
+          <td class="num" data-l="经济">4.7k</td><td class="num" data-l="参团">64%*</td>
+        </tr>
+        <tr>
+          <td class="hero" data-l="英雄">少司缘</td><td class="name" data-l="昵称">Sco</td><td class="role" data-l="分路"><span class="cand" title="分路为候选，待确认">游走</span></td>
+          <td class="num" data-l="评分">13.1</td><td class="num" data-l="K/D/A">0/0/15</td>
+          <td class="num" data-l="输出">18.2k</td><td class="num" data-l="承受">16.5k</td>
+          <td class="num" data-l="经济">3.9k</td><td class="num" data-l="参团">88%</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="hero" data-l="合计">合计</td><td class="name" data-l="">5 人</td><td class="role" data-l=""></td>
+          <td class="num" data-l="评分">—</td><td class="num" data-l="K/D/A">17/3</td>
+          <td class="num" data-l="输出">142.9k</td><td class="num" data-l="承受">89.3k</td>
+          <td class="num" data-l="经济">22.2k</td><td class="num" data-l="参团"><span>69.0%<small class="muted">均</small></span></td>
+        </tr>
+      </tfoot>
+    </table>
+    </div>
+  </div>
+
+  <div class="note small">
+    <b>字段口径</b>：评分＝结算面板战斗评分；输出＝对英雄造成伤害；承受＝承受伤害；经济＝获得金币；参团＝(击杀+助攻)/队伍击杀。<br/>
+    面板列名未逐字录得，四列按上式推定，并用「输出合计＝对方承受合计」对账一致（见末尾校验）。<br/>
+    <b>*</b> 蓝方沈梦溪参团率面板该项未读到，按 0/4/0 计为 0%；<b>*</b> 李信 64% 与按 2/0/9 计算的 64.7% 差 1 点（另处记录写 65%）。两项均列入「待核实」。
+  </div>
+
+  <p class="small muted">
+    英雄与昵称的对应：<b>铠＝放闪的秋</b> 已在击杀时间线中确认；其余 9 人由「参团率 + 分路 + 阵亡数」交叉比对得出，整体标「待核实」。分路一列为候选值（术语见来源），以虚线下划线标出。
+  </p>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>经济差与伤害对比</h2>
+    <span class="badge">仅终局快照</span>
+  </div>
+
+  <div class="card">
+    <div class="metric">
+      <div class="metric-h"><b>击杀</b><span>蓝 3 · 红 17</span></div>
+      <div class="bar-row"><span class="bar-l">蓝</span><div class="bar"><i class="blue" style="width:17.6%"></i></div><span class="bar-v">3</span></div>
+      <div class="bar-row"><span class="bar-l">红</span><div class="bar"><i class="red" style="width:100%"></i></div><span class="bar-v">17</span></div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-h"><b>经济</b><span>蓝 15.0k · 红 22.2k · 差 7.2k（红多 48%）</span></div>
+      <div class="bar-row"><span class="bar-l">蓝</span><div class="bar"><i class="blue" style="width:67.6%"></i></div><span class="bar-v">15.0k</span></div>
+      <div class="bar-row"><span class="bar-l">红</span><div class="bar"><i class="red" style="width:100%"></i></div><span class="bar-v">22.2k</span></div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-h"><b>输出伤害</b><span>蓝 89.3k · 红 142.9k · 差 53.6k（红多 60%）</span></div>
+      <div class="bar-row"><span class="bar-l">蓝</span><div class="bar"><i class="blue" style="width:62.5%"></i></div><span class="bar-v">89.3k</span></div>
+      <div class="bar-row"><span class="bar-l">红</span><div class="bar"><i class="red" style="width:100%"></i></div><span class="bar-v">142.9k</span></div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-h"><b>承受伤害</b><span>蓝 142.9k · 红 89.3k</span></div>
+      <div class="bar-row"><span class="bar-l">蓝</span><div class="bar"><i class="blue" style="width:100%"></i></div><span class="bar-v">142.9k</span></div>
+      <div class="bar-row"><span class="bar-l">红</span><div class="bar"><i class="red" style="width:62.5%"></i></div><span class="bar-v">89.3k</span></div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-h"><b>人均参团率</b><span>蓝 39.8% · 红 69.0%</span></div>
+      <div class="bar-row"><span class="bar-l">蓝</span><div class="bar"><i class="blue" style="width:57.7%"></i></div><span class="bar-v">39.8%</span></div>
+      <div class="bar-row"><span class="bar-l">红</span><div class="bar"><i class="red" style="width:100%"></i></div><span class="bar-v">69.0%</span></div>
+    </div>
+
+    <p class="small muted" style="margin-bottom:0">
+      经济差为终局合计差值，<b>没有分时经济曲线</b>：录像未被逐分钟解算，不能用本条推断任何时间点的领先幅度。<br/>
+      承受伤害与输出伤害为同一组数字的两侧，详见文末校验。
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>关键节点</h2>
+    <span class="small muted">时间＝游戏内时钟</span>
+  </div>
+  <div class="card">
+    <ul class="timeline">
+      <li><time>00:39–00:44</time><div class="t-d">一血：敌方沈梦溪击杀我方沈梦溪，少司缘进场。<span class="small">三套记录：00:39（宣传片事实段）/ 00:41（身份修正 v01）/ 00:44（画面核对）。</span><span class="status pending">待核实</span></div></li>
+      <li><time>01:53</time><div class="t-d">敌方连续击杀，比分 0:4。<span class="small">击杀方归属未逐头核对。</span></div></li>
+      <li><time>01:56–01:57</time><div class="t-d">我方第一头：放闪的秋（铠）。<span class="small">两套记录 01:56 / 01:57。</span><span class="status pending">待核实</span></div></li>
+      <li><time>03:23</time><div class="t-d">我方第二头：铠。</div></li>
+      <li><time>03:28–04:38</time><div class="t-d">片段 06：比分 2:8 → 2:10；红方推塔 0 → 2。<span class="small">「红塔」指红方推掉蓝塔还是红塔被推，口径待核实。</span><span class="status pending">待核实</span></div></li>
+      <li><time>04:01</time><div class="t-d">蓝方下路外塔 B-B1 失守。<span class="small">时刻由片段 06 画面核对；塔号来自地图教程例题（map_kit），需复核原帧。</span></div></li>
+      <li><time>04:28</time><div class="t-d">蓝方下路二塔 B-B2 出现摧毁提示。<span class="small">同上。</span></div></li>
+      <li><time>04:40</time><div class="t-d">我方第三头：铠。<span class="small">全队 3 头均归铠（已确认）。</span></div></li>
+      <li><time>04:50–05:38</time><div class="t-d">片段 07：比分推进至 3:14；李信出镜。<span class="small">3:14 与终局 17 之间差 3 头，逐头归属未核。</span><span class="status pending">待核实</span></div></li>
+      <li><time>05:16</time><div class="t-d">蓝方中路外塔 B-M1 出现摧毁提示。<span class="small">片段 07 画面已核对；map_kit 例题记 05:23 失守，差 7 秒。</span><span class="status pending">待核实</span></div></li>
+      <li><time>05:55–06:03</time><div class="t-d">最后一波：下路二塔被强拆，两人去打龙，基地被推平。<span class="small">仅片段观察，未拆成逐事件；此塔与 04:28 摧毁提示的 B-B2 是否同一座，未核。</span><span class="status pending">待核实</span></div></li>
+      <li><time>06:03</time><div class="t-d">最后可见时钟；基地被摧毁（爆炸演出在其后）。<span class="status confirmed">已确认</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>数据来源</h2>
+    <a class="small" href="sources.html">来源与核对总表 →</a>
+  </div>
+  <div class="card">
+    <div class="table-wrap">
+    <table class="src-t src-src">
+      <thead><tr><th>字段</th><th>来源</th><th>状态</th></tr></thead>
+      <tbody>
+        <tr><td>比分 3:17、十人评分 / 输出 / 承受 / 经济 / 参团、K-D-A</td><td>结算面板截图 filehelper_87.jpg（视频 919s）</td><td><span class="status confirmed">已确认</span></td></tr>
+        <tr><td>最后可见时钟 06:03、结束方式</td><td>录像 905s + 事实台账 F05</td><td><span class="status confirmed">已确认</span></td></tr>
+        <tr><td>击杀时间线（一血、三头）</td><td>身份与事实修正 v01 §2.1、画面核对、宣传片事实段</td><td><span class="status pending">部分待核实</span></td></tr>
+        <tr><td>推塔时刻 04:01 / 04:28 / 05:16，比分推进 2:8→2:10 / 3:14</td><td>片段 06 / 07 画面核对</td><td><span class="status confirmed">画面已确认</span></td></tr>
+        <tr><td>塔号 B-B1 / B-B2 / B-M1</td><td>map_kit/README.md（地图教程例题标注）</td><td><span class="status pending">待复核原帧</span></td></tr>
+        <tr><td>经济差、伤害合计、人均参团</td><td>本页由结算面板逐人数据求和</td><td><span class="status">计算值</span></td></tr>
+        <tr><td>比赛日期、赛事正式名称、与「赏金赛 / 圣诞赛」的关系</td><td>—</td><td><span class="status pending">待确认</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="small muted" style="margin-bottom:0">来源编号（src_settle_919 等）见 <a href="sources.html">来源页</a>；本页不引用视频与截图原图。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>待核实字段</h2>
+    <span class="badge warn">11 项</span>
+  </div>
+  <div class="card">
+    <div class="table-wrap">
+    <table class="src-t src-todo">
+      <thead><tr><th>#</th><th>字段</th><th>现状</th><th>关闭条件</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td>一血时间</td><td>00:39 / 00:41 / 00:44 三套记录</td><td>回原帧统一到一个时刻</td></tr>
+        <tr><td class="num">2</td><td>我方第一头时间</td><td>01:56 / 01:57</td><td>同上</td></tr>
+        <tr><td class="num">3</td><td>李信参团率</td><td>面板 64%，按 2/0/9 计 64.7%，另处记 65%</td><td>确认面板取整规则</td></tr>
+        <tr><td class="num">4</td><td>蓝方沈梦溪参团率</td><td>面板该项未读到，按 0/4/0 记为 0%</td><td>补拍该行或读原图</td></tr>
+        <tr><td class="num">5</td><td>英雄 ↔ 昵称</td><td>仅「铠＝放闪的秋」已确认；其余 9 人为交叉比对</td><td>逐行核对结算面板截图</td></tr>
+        <tr><td class="num">6</td><td>分路</td><td>10 人全部为候选值；李信记「发育路」与英雄位冲突</td><td>出赛前分路表</td></tr>
+        <tr><td class="num">7</td><td>面板列名</td><td>评分 / 输出 / 承受 / 经济 为推定，合计对账一致</td><td>截取面板表头</td></tr>
+        <tr><td class="num">8</td><td>B-M1 时刻</td><td>05:16（画面）vs 05:23（map_kit）</td><td>回原帧取一个值</td></tr>
+        <tr><td class="num">9</td><td>塔号与归属</td><td>B-B1 / B-B2 / B-M1 来自教程例题标注；最后一波「下路二塔」与 04:28 的 B-B2 是否同一座，未核</td><td>复核原帧后去掉「待核实」</td></tr>
+        <tr><td class="num">10</td><td>比赛日期 / 正式名称</td><td>未确认；「红塔 0→2」口径也待确认</td><td>Jason 或规则文件确认</td></tr>
+        <tr><td class="num">11</td><td>逐头击杀归属</td><td>3:14 → 17 之间 3 头，只知蓝方 3 头全归铠</td><td>逐头核对时间线</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><h2>校验</h2><span class="badge ok">4/4 通过</span></div>
+  <div class="card">
+    <ul class="small" style="margin:0;padding-left:18px">
+      <li><b>阵亡对账</b>：蓝方阵亡合计 4+3+4+2+4＝17，等于红方击杀 17；红方阵亡 2+0+1+0+0＝3，等于蓝方击杀 3。</li>
+      <li><b>伤害互等</b>：蓝方输出合计 89.3k ＝ 红方承受合计 89.3k；红方输出合计 142.9k ＝ 蓝方承受合计 142.9k。两列口径自洽，也反证「输出 / 承受」不是反的。</li>
+      <li><b>参团率复算</b>：按 (杀+助攻)/队伍击杀 复核 10 人，9 人一致（±0.5 点内），李信差 1 点，见待核实 3。</li>
+      <li><b>比分与经济方向一致</b>：红方 17 杀、经济 22.2k；蓝方 3 杀、经济 15.0k，差值方向不矛盾（仅方向校验，不做因果推断）。</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="footer">
+  宗师杯 · 学生自行组织的王者荣耀国际服赛事（非校队）｜本页为独立单场数据页，不参与站点构建流程。<br/>
+  只公开游戏昵称与游戏数据，不公开真实姓名 / 学校；未确认信息标「待核实」，不写推测性结论。<br/>
+  发现错误或希望隐藏数据，请联系 Jason（由运营人工处理）。
+</footer>
+
+</div>
+</body>
+</html>
