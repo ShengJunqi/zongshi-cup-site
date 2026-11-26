@@ -1,0 +1,133 @@
+.zsc-arena {
+  box-sizing: border-box;
+  position: relative;
+  display: grid;
+  place-items: end center;
+  min-height: clamp(23rem, 46vw, 34rem);
+  overflow: hidden;
+  padding: clamp(6.5rem, 14vw, 10rem) clamp(1rem, 4vw, 3rem) clamp(2rem, 5vw, 4.5rem);
+  border: 1px solid #594e36;
+  border-radius: 18px;
+  background: #111a29 url("winter-arena.webp") center 34% / cover no-repeat;
+  isolation: isolate;
+}
+
+.zsc-arena::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(to top, #0a101c73, transparent 65%);
+}
+.zsc-arena__portals {
+  display: grid;
+  width: min(100%, 52rem);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: center;
+  justify-items: center;
+  gap: clamp(1.2rem, 3.5vw, 3.25rem) clamp(.25rem, 1vw, 1rem);
+}
+.zsc-arena__portal {
+  --metal: #f4c97e;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  width: 100%;
+  max-width: 10.5rem;
+  min-height: 5.15rem;
+  padding: .58rem .55rem;
+  border: 1px solid #97815d;
+  border-radius: .2rem .95rem .2rem .95rem;
+  background: linear-gradient(160deg, #293449 0%, #141d2e 65%, #202532 100%);
+  box-shadow: inset 0 0 0 2px #0b111f, 0 3px 0 #473b2a, 0 8px 16px #050911b3;
+  color: #fff8e9;
+  font: 650 clamp(.95rem, 1.7vw, 1.2rem)/1.2 "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+  letter-spacing: .05em;
+  text-align: center;
+  text-decoration: none;
+}
+.zsc-arena .zsc-arena__portal:hover {
+  border-color: #ffe4af;
+  box-shadow: inset 0 0 0 2px #0b111f, 0 3px 0 #80643b, 0 7px 20px #080e20bd;
+  color: white;
+}
+.zsc-arena .zsc-arena__portal:focus-visible { outline: 3px solid #ffeb94; outline-offset: 4px; }
+.zsc-arena__portal:active { translate: 0 2px; }
+.zsc-arena__enroll {
+  grid-area: 1 / 3 / 2 / 5;
+  --metal: #422d13;
+  border-color: #ffda8a;
+  background: linear-gradient(135deg, #f9dd94, #eab55d 65%, #d9983b);
+  box-shadow: inset 0 0 0 2px #a56f36, 0 3px 0 #765021, 0 8px 18px #080b13a3;
+  color: #211807;
+  transform: translateY(-10%);
+}
+.zsc-arena .zsc-arena__enroll:hover { color: #161002; background: #f8ce79; }
+.zsc-arena__availability { grid-area: 1 / 1 / 2 / 3; }
+.zsc-arena__survey { grid-area: 1 / 5 / 2 / 7; }
+.zsc-arena__format { grid-area: 2 / 2 / 3 / 4; }
+.zsc-arena__calendar { grid-area: 2 / 4 / 3 / 6; }
+.zsc-arena__icon {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  width: 26px;
+  height: 26px;
+  color: var(--metal);
+}
+.zsc-arena__icon::before, .zsc-arena__icon::after {
+  content: "";
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+}
+.zsc-arena__enroll i::before {
+  inset: 1px 2px 8px; border: 2px solid currentColor; border-radius: 2px 2px 9px 9px;
+}
+.zsc-arena__enroll i::after {
+  left: 6px; bottom: 1px; width: 14px; height: 8px;
+  background: linear-gradient(currentColor, currentColor) center / 3px 100% no-repeat;
+  border-bottom: 2px solid currentColor;
+}
+.zsc-arena__availability i::before { inset: 1px; border: 2px solid currentColor; border-radius: 50%; }
+.zsc-arena__availability i::after { left: 12px; top: 5px; width: 7px; height: 9px; border: solid currentColor; border-width: 0 0 2px 2px; }
+.zsc-arena__survey i::before {
+  inset: 2px 3px; border: 2px solid currentColor; border-radius: 2px;
+  background: linear-gradient(currentColor, currentColor) 3px 4px / 10px 2px no-repeat,
+              linear-gradient(currentColor, currentColor) 3px 10px / 7px 2px no-repeat;
+}
+.zsc-arena__format i::before { inset: 2px 12px 2px 2px; border: solid currentColor; border-width: 2px 2px 2px 0; }
+.zsc-arena__format i::after { inset: 12px 2px auto 13px; border-top: 2px solid currentColor; }
+.zsc-arena__calendar i::before {
+  inset: 4px 1px 2px; border: 2px solid currentColor; border-radius: 3px;
+  background: linear-gradient(currentColor, currentColor) 0 4px / 100% 2px no-repeat;
+}
+.zsc-arena__calendar i::after {
+  left: 7px; top: 1px; width: 12px; height: 7px; border: solid currentColor; border-width: 0 2px;
+}
+@media (max-width: 43rem) {
+  .zsc-arena { min-height: 22rem; padding: 6.6rem 1.1rem 1.7rem; background-position: center 15%; }
+  .zsc-arena__portals { gap: .85rem .6rem; }
+  .zsc-arena__portal { min-height: 4.8rem; }
+}
+@media (max-width: 32rem) {
+  .zsc-arena { padding: 6rem .7rem 1rem; }
+  .zsc-arena__portals { grid-template-columns: repeat(2,minmax(0,1fr)); gap: .6rem; }
+  .zsc-arena .zsc-arena__portal { grid-area: auto; max-width: none; min-height: 3.5rem; flex-direction: row; gap: .45rem; }
+  .zsc-arena .zsc-arena__enroll { grid-column: 1 / -1; justify-self: center; max-width: 12rem; transform: none; }
+  .zsc-arena__icon { flex: 0 0 26px; }
+}
+@media (max-width: 20rem) {
+  .zsc-arena { padding: 5rem .7rem .8rem; }
+  .zsc-arena__portals { grid-template-columns: 1fr; }
+  .zsc-arena .zsc-arena__enroll { max-width: none; }
+  .zsc-arena .zsc-arena__portal { min-height: 2.8rem; }
+}
+@media (forced-colors: active) {
+  .zsc-arena__portal { border: 2px solid LinkText; }
+}
+

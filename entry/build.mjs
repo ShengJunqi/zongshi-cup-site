@@ -1,0 +1,14 @@
+import {cp, mkdir, readFile, writeFile} from "node:fs/promises";
+import {fileURLToPath} from "node:url";
+import path from "node:path";
+const root = path.dirname(fileURLToPath(import.meta.url));
+const src = name => readFile(path.join(root,"src",name),"utf8");
+const [worker, page, css, client, staff, staffPage, arena, arenaCss] = await Promise.all(["worker.mjs","page.html","entry.css","client.js","staff.js","staff.html","arena-hub.html","arena-hub.css"].map(src));
+const artwork=(await readFile(path.join(root,"src","winter-arena.webp"))).toString("base64");
+const publicPage=page.replace("<!--ARENA-->",arena);
+const output = path.join(root,"dist","server");
+await mkdir(output,{recursive:true});
+const constants={PAGE:publicPage,CSS:css+"\n"+arenaCss,CLIENT:client,STAFF:staff,STAFF_PAGE:staffPage,ARTWORK:artwork};
+await writeFile(path.join(output,"index.js"),Object.entries(constants).map(([key,val])=>"const "+key+"="+JSON.stringify(val)+";").join("\n")+"\n"+worker);
+await cp(path.join(root,"drizzle"),path.join(root,"dist","drizzle"),{recursive:true});
+console.log("Built entry/dist/server/index.js");
