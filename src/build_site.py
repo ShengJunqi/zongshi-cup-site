@@ -765,6 +765,8 @@ h1{{font-size:52px;letter-spacing:2px;line-height:1.1}}
         (SITE / "assets").mkdir(exist_ok=True)
         (SITE / "matches").mkdir(exist_ok=True)
         (SITE / "players").mkdir(exist_ok=True)
+        (SITE / "join").mkdir(exist_ok=True)
+        (SITE / "join" / "index.html").write_bytes((ROOT / "src" / "join.html").read_bytes())
         (SITE / "assets" / "theme.css").write_text(CSS, encoding="utf-8")
         self.prefix = ""
         (SITE / "index.html").write_text(self.page_index(), encoding="utf-8")

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <meta name="referrer" content="no-referrer">
+  <title>宗师杯参赛入口</title>
+  <style>
+    :root{color-scheme:dark;font-family:"Microsoft YaHei",system-ui,sans-serif}
+    body{max-width:38rem;margin:12vh auto;padding:0 1.4rem;background:#0a1216;color:#eef1e8}
+    p{line-height:1.7;color:#becac3}a{display:inline-block;padding:.8rem 1.3rem;color:#162219;background:#edc87c;border-radius:.5rem;font-weight:650}
+  </style>
+</head>
+<body>
+  <h1>宗师杯参赛入口</h1>
+  <p>在参赛入口可以报名、填写调研，或用回执查看队伍时段。</p>
+  <a id="entry" href="https://zongshi-cup-entry.soundhorse9.chatgpt.site/">打开宗师杯参赛入口</a>
+  <script>
+    const link=document.getElementById("entry");
+    const sections=["#home","#enroll","#availability","#survey","#format","#calendar"];
+    if(sections.includes(location.hash))link.hash=location.hash;
+    location.replace(link.href);
+  </script>
+</body>
+</html>
